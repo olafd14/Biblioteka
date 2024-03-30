@@ -3,8 +3,8 @@
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="text-white py-2">Book List</h2>
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Lista Książek</h2>
             </div>
         </div>
     </div>
@@ -12,69 +12,68 @@
         <div class="row pb-3">
             <div class="text-end">
                 <a asp-controller="Book" asp-action="Create" class="btn btn-primary">
-                    Create New Book
+                    Dodaj książkę
                 </a>
             </div>
         </div>
         <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>
-                        Tytuł
-                    </th>
-                    <th>
-                        Autor
-                    </th>
-                    <th>
-                        Opis
-                    </th>                    
-                    <th>
-                        Dostępność
-                    </th>
-                    <th>
-                        Kategoria
-                    </th>
-                    <th>
-                        Ocena
-                    </th>
-                    <th style="width: 200px"
 
-                </tr>
-            </thead>
             <tbody>
                 @foreach (var obj in Model.OrderBy(u => u.Title))
                 {
                     <tr>
-                        <td>
-                            <img src="@obj.ImageUrl" style="width: 100px; height: 100px;" />
-                        </td>
-                        <td>
-                            @obj.Title
-                        </td>
-                        <td>
-                            @obj.Author
-                        </td>
-                        <td>
-                            @obj.Description
-                        </td>
-                        <td>
-                            @obj.isAvailable
-                        </td>
-                        <td>
-                            @obj.CategoryId
-                        </td>
-                        <td>
-                            @obj.UserRating
-                        </td>
-                        <td>
-                            <div class="text-end" role="group">
-                                <a asp-controller="Book" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                    Edit
-                                </a>
-                                <a asp-controller="Book" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2 delete-btn">
-                                    Delete
-                                </a>
+                        <td class="row mb-4" style="background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 8px; padding: 2px; margin-top: 5px;">
+                            <div class="col-md-2">
+                                <div style="width: 150px; height: 200px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+                                    <img src="@obj.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <strong>@obj.Title</strong>
+                                    </div>
+                                    <div class="col-md-6 text-end" style="color:black">
+                                        <strong>@obj.Category.Name</strong>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        @obj.Author
+                                    </div>
+                                    <div class="col-md-6 text-end" style="color:black; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                                        <strong>@(obj.UserRating.ToString("0.0")) /10</strong>
+                                    </div>
+                                </div>
+                                <div style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; height: 134px;">
+                                    @{
+                                        const int maxLength = 550;
+                                        if (obj.Description.Length > 550)
+                                        {
+                                            int lastSpaceIndex = obj.Description.LastIndexOf(' ', maxLength);
+                                            string trimmedDescription = obj.Description.Substring(0, lastSpaceIndex);
+                                            <text>@trimmedDescription...</text>
+                                        }
+                                        else
+                                        {
+                                            @obj.Description
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="col-md-6 text-end">
+                                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mb-2"
+                                       style="width: 92px; height: 95px; display: flex; align-items: center; justify-content: center;">
+                                        Edytuj
+                                    </a>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <a asp-controller="Book" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger"
+                                       style="width: 92px; height: 95px; display: flex; align-items: center; justify-content: center;">
+                                        Usuń
+                                    </a>
+                                </div>
                             </div>
                         </td>
                     </tr>

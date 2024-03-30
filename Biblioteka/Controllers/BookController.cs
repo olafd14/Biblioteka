@@ -2,6 +2,7 @@
 using Biblioteka.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Controllers
 {
@@ -16,7 +17,7 @@ namespace Biblioteka.Controllers
         }
         public IActionResult Index()
         {
-            List<Book> objBookList = _db.Books.ToList();
+            List<Book> objBookList = _db.Books.Include(book => book.Category).ToList();
             return View(objBookList);
         }
 
