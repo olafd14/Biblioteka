@@ -1,13 +1,17 @@
 ﻿using Biblioteka.Data;
 using Biblioteka.Models;
+using Biblioteka.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteka.Controllers
+namespace Biblioteka.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class BookController : Controller
-    {
+    {        
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public BookController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
@@ -48,7 +52,7 @@ namespace Biblioteka.Controllers
             {
                 string wwwRotPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
-                { 
+                {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRotPath, @"images");
 
@@ -109,12 +113,12 @@ namespace Biblioteka.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRotPath, @"images");
 
-                    if(!string.IsNullOrEmpty(obj.ImageUrl))
+                    if (!string.IsNullOrEmpty(obj.ImageUrl))
                     {
                         var oldImagePath =
                             Path.Combine(wwwRotPath, obj.ImageUrl.TrimStart('\\'));
 
-                        if(System.IO.File.Exists(oldImagePath))
+                        if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
@@ -150,7 +154,7 @@ namespace Biblioteka.Controllers
                 return NotFound();
             }
 
-            
+
             if (!string.IsNullOrEmpty(book.ImageUrl))
             {
                 var oldImagePath =
@@ -161,7 +165,7 @@ namespace Biblioteka.Controllers
                     System.IO.File.Delete(oldImagePath);
                 }
             }
-          
+
 
             _db.Books.Remove(book);
             _db.SaveChanges();

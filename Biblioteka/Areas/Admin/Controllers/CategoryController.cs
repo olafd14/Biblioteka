@@ -1,9 +1,13 @@
 ﻿using Biblioteka.Data;
 using Biblioteka.Models;
+using Biblioteka.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteka.Controllers
+namespace Biblioteka.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -22,7 +26,7 @@ namespace Biblioteka.Controllers
         #region Create
 
         public IActionResult Create()
-        {            
+        {
             return View();
         }
 
@@ -43,7 +47,7 @@ namespace Biblioteka.Controllers
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
-                _db.SaveChanges();                 
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View();
@@ -79,7 +83,7 @@ namespace Biblioteka.Controllers
             if (ModelState.IsValid)
             {
                 _db.Categories.Update(obj);
-                _db.SaveChanges();                
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View();
@@ -108,14 +112,14 @@ namespace Biblioteka.Controllers
                 _db.Categories.Remove(category);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-                
+
             }
             else
             {
                 return BadRequest("Nie można usunąć kategori do której są przypisane książki.");
             }
 
-            
+
         }
 
         #endregion
