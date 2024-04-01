@@ -8,13 +8,13 @@
     bool isUserBorrowedBook = currentUser != null && currentUser.BookId == book.Id && currentUser.HasBorrowedBook; // Checking if the current user has borrowed the book
 }
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+    <div class="card-header ml-0 py-3">
         <div class="row">
             <div class="col-1">
-                <a asp-controller="Home" asp-action="Index" class="btn btn-transparent"><i class="bi bi-arrow-left-circle text-white" style="font-size: 30px;"></i></a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-transparent"><i class="bi bi-arrow-left" style="font-size: 30px;"></i></a>
             </div>
             <div class="col-11 text-center">
-                <h2 class="text-white py-2"><strong>@Model.Title - @Model.Author</strong></h2>
+                <h2 class="py-2"><strong>@Model.Title - @Model.Author</strong></h2>
             </div>
         </div>
     </div>
@@ -29,13 +29,13 @@
                     </div>
                     <div class="col-md-8" style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis;">
                         <div class="row mb-2">
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-12 mb-2" style="color:black">
                                 <strong style="font-size: 35px; margin-left: 20px;">Tytuł: @Model.Title</strong>
                             </div>
                             <div class="col-md-12 mb-2" style="color:black">
                                 <strong style="font-size: 35px; margin-left: 20px;">Autor: @Model.Author</strong>
                             </div>
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-12 mb-2" style="color:black">
                                 <strong style="font-size: 35px; margin-left: 20px;">Kategoria: @Model.Category.Name</strong>
                             </div>
                             <div class="col-md-12 mb-2" style="color:black; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="mb-2" style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; font-size: 30px;">
-                                    <strong style="font-size: 35px;">Opis:</strong> @Model.Description
+                                    <strong style="font-size: 35px; color:black">Opis:</strong> @Model.Description
                                 </div>
                                 <div class="col-md-1">
                                 </div>

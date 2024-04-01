@@ -14,6 +14,8 @@ namespace Biblioteka.Models
         public Book Book { get; set; }
         [Display(Name = "Czy ma książkę wypożyczoną")]
         public bool HasBorrowedBook { get; set; }
+        [NotMapped]
+        public string Role { get; set; }
 
         public void BorrowBook(Book book)
         {
