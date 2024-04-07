@@ -8,18 +8,19 @@
             </div>
         </div>
     </div>
-    <div class="card-body p-4">        
+    <div class="card-body p-4">
         <table class="table table-bordered table-striped bg-light">
             <thead>
                 <tr>
                     <th>
-                        Nazwa
+                        <strong>Nazwa</strong>
                     </th>
                     <th>
-                        Rola
+                        <strong>Rola</strong>
                     </th>
-                    
-                    <th style="width: 200px"
+                    <th>
+                        <strong> Wypożyczona książka</strong>
+                    </th>
 
                 </tr>
             </thead>
@@ -29,15 +30,50 @@
                     <tr>
                         <td>
                             @obj.UserName
-                        </td>   
+                        </td>
                         <td>
                             @obj.Role
-                        </td> 
+                        </td>
                         <td>
-                            <div class="text-end"  role="group">
-                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-outline-primary mx-2">
-                                    Edit
-                                </a>                                
+                            @if (obj.HasBorrowedBook == true)
+                            {
+                                @obj.Book.Title
+                            }
+                            else
+                            {
+                                <strong>-</strong>
+                            }
+                        </td>
+                        <td>
+                            <div class="text-end col-md-12" role="group">
+                                <div class="row">
+                                    <div class="col-md-9 text-end">
+                                        @if (obj.LockoutEnd != null && obj.LockoutEnd > DateTime.Now)
+                                        {
+
+                                            <form method="post" asp-controller="UserManager" asp-action="LockUnlock">
+                                                <input type="hidden" name="id" value="@obj.Id" />
+                                                <button type="submit" class="btn btn-danger mx-2">
+                                                    <i class="bi bi-lock"></i> Locked
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" asp-controller="UserManager" asp-action="LockUnlock">
+                                                <input type="hidden" name="id" value="@obj.Id" />
+                                                <button type="submit" class="btn btn-success mx-2">
+                                                    <i class="bi bi-unlock"></i> Unlocked
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a asp-controller="UserManager" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary mx-2">
+                                            Edit
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
