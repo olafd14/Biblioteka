@@ -67,12 +67,20 @@ namespace Biblioteka.Areas.Customer.Controllers
             }
 
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
+            var reviews = _db.Reviews.Where(r => r.BookId == id).ToList();
 
+            // Utwórz instancjê ViewModel i przeka¿ informacje o ksi¹¿ce, recenzjach i ID u¿ytkownika
+            var viewModel = new BookDetailsViewModel
+            {
+                Book = book,
+                Reviews = reviews,
+                UserId = userId
+            };
             // Pass the information to the view
             ViewData["CurrentUser"] = user;
             ViewData["Book"] = book;
 
-            return View(book);
+            return View(viewModel);
         }
 
         

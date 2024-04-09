@@ -26,21 +26,14 @@
                             <option disabled selected>-Wybierz Role-</option>
                         </select>
                         <label asp-for="ApplicationUser.Role" class="ms-2"></label>
-                    </div>                  
-                        <div class="form-floating py-2 col-12">
-                        <select asp-for="ApplicationUser.HasBorrowedBook" class="form-select border-0 shadow">                                
-                                <option value="true">Dostępna</option>
-                                <option value="false">Niedostępna</option>
-                            </select>
-                        <label asp-for="ApplicationUser.HasBorrowedBook" class="ms-2"></label>
-                        <span asp-validation-for="ApplicationUser.HasBorrowedBook" class="text-danger"></span>
+                    </div>                      
                         <div class="row pt-2">
                             <div class="col-6 col-md-3">
-                                <button type="submit" class="btn btn-primary form-control">Edytuj</button>
+                                <button type="submit" class="btn btn-primary form-control">Zapisz</button>
                             </div>
                             <div class="col-6 col-md-3">
                                 <a asp-controller="UserManager" asp-action="Index" class="btn btn-outline-primary border form-control">
-                                    Back to list
+                                    Cofnij
                                 </a>
                             </div>
                         </div>

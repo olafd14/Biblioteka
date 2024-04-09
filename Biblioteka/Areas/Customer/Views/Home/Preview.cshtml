@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@model BookDetailsViewModel
 
 @{
     ApplicationUser currentUser = ViewData["CurrentUser"] as ApplicationUser;
@@ -14,7 +14,7 @@
                 <a asp-controller="Home" asp-action="Index" class="btn btn-transparent"><i class="bi bi-arrow-left" style="font-size: 30px;"></i></a>
             </div>
             <div class="col-11 text-center">
-                <h2 class="py-2"><strong>@Model.Title - @Model.Author</strong></h2>
+                <h2 class="py-2"><strong>@Model.Book.Title - @Model.Book.Author</strong></h2>
             </div>
         </div>
     </div>
@@ -24,55 +24,110 @@
                 <div class="row mb-2 shadow" style="background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 8px; padding: 2px; margin-top: 5px;">
                     <div class="col-md-4">
                         <div style="width: 400px; height: 600px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
-                            <img src="@Model.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
+                            <img src="@Model.Book.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
                         </div>
                     </div>
                     <div class="col-md-8" style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis;">
                         <div class="row mb-2">
                             <div class="col-md-12 mb-2" style="color:black">
-                                <strong style="font-size: 35px; margin-left: 20px;">Tytuł: @Model.Title</strong>
+                                <strong style="font-size: 35px; margin-left: 20px;">Tytuł: @Model.Book.Title</strong>
                             </div>
                             <div class="col-md-12 mb-2" style="color:black">
-                                <strong style="font-size: 35px; margin-left: 20px;">Autor: @Model.Author</strong>
+                                <strong style="font-size: 35px; margin-left: 20px;">Autor: @Model.Book.Author</strong>
                             </div>
                             <div class="col-md-12 mb-2" style="color:black">
-                                <strong style="font-size: 35px; margin-left: 20px;">Kategoria: @Model.Category.Name</strong>
+                                <strong style="font-size: 35px; margin-left: 20px;">Kategoria: @Model.Book.Category.Name</strong>
                             </div>
                             <div class="col-md-12 mb-2" style="color:black; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-                                <strong style="font-size: 35px; margin-left: 20px;">Ocena: @(Model.UserRating.ToString("0.0")) /10 <i class="bi bi-star-fill"></i></strong>
+                                <strong style="font-size: 35px; margin-left: 20px;">Ocena: @(Model.Book.UserRating.ToString("0.0")) /10 <i class="bi bi-star-fill"></i></strong>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="mb-2" style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; font-size: 30px;">
-                                    <strong style="font-size: 35px; color:black">Opis:</strong> @Model.Description
+                                    <strong style="font-size: 35px; color:black">Opis:</strong> @Model.Book.Description
                                 </div>
                                 <div class="col-md-1">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 text-end">
+                    <div class="col-md-3 text-start">
+                        <a asp-area="Customer" asp-controller="Review" asp-action="Create" asp-route-userId="@User.Identity.Name" asp-route-bookId="@Model.Book.Id" class="btn btn-secondary border form-control"
+                           style=" margin-top: 10px; block-size: max-content; font-size: 25px;">
+                            Dodaj komentarz
+                        </a>
+                    </div>
+                    <div class="col-md-9 text-end">
                         @if (isBookAvailable && !isUserBorrowedBook)
                         {
-                            <form method="post" asp-controller="Home" asp-action="Borrow" asp-route-id="@Model.Id">
+                            <form method="post" asp-controller="Home" asp-action="Borrow" asp-route-id="@Model.Book.Id">
                                 <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <button type="submit" class="btn btn-info mx-2" style="margin-top: 20px; block-size: max-content; font-size: 25px;">Wypożycz</button>
+                                <button type="submit" class="btn btn-info mx-2" style="margin-top: 10px; block-size: max-content; font-size: 25px;">Wypożycz</button>
                             </form>
                         }
                         else if (isUserBorrowedBook)
                         {
-                            <form method="post" asp-controller="Home" asp-action="Return" asp-route-id="@Model.Id">
+                            <form method="post" asp-controller="Home" asp-action="Return" asp-route-id="@Model.Book.Id">
                                 <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <button type="submit" class="btn btn-warning mx-2" style="margin-top: 20px; block-size: max-content; font-size: 25px;">Oddaj</button>
+                                <button type="submit" class="btn btn-warning mx-2" style="margin-top: 10px; block-size: max-content; font-size: 25px;">Oddaj</button>
                             </form>
                         }
                         else
                         {
-                            <button type="button" class="btn btn-secondary mx-2" style="margin-top: 20px; block-size: max-content; font-size: 25px;" disabled>Niedostępna</button>
+                            <button type="button" class="btn btn-secondary mx-2" 
+                            style="margin-top: 10px; block-size: max-content; font-size: 25px;" disabled>
+                            Niedostępna
+                            </button>
                         }
                     </div>
-                    <div class="col-md-12">
-                        <strong style="font-size: 40px;">Opinie:</strong>
-                    </div>  
+                    
+                    
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <div class="col-md-12">
+                                <strong style="font-size: 40px;">Opinie:</strong>
+                            </div>
+                            @foreach (var obj in Model.Reviews.OrderBy(u => u.Title))
+                            {
+                                <tr>
+                                    <td class="row mb-2 shadow" style="border: 1px solid #ccc; border-radius: 8px; padding: 2px; margin-top: 5px;">                                       
+                                        <div class="col-md-12">
+                                            <div class="row mb-2">
+                                                <div class="col-md-6">
+                                                    <strong>@obj.Title</strong>
+                                                </div>
+                                                <div class="col-md-6 text-end" style="color:black">
+                                                    <strong>@obj.Date</strong>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-6">
+                                                    @obj.Rating/10 <i class="bi bi-star-fill"></i>
+                                                </div>
+                                                <div class="col-md-6 text-end">
+                                                    @obj.UserId
+                                                </div>                                                
+                                            </div>
+                                            <div style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; height: 134px;">
+                                                @{
+                                                    const int maxLength = 550;
+                                                    if (obj.Content.Length > 550)
+                                                    {
+                                                        int lastSpaceIndex = obj.Content.LastIndexOf(' ', maxLength);
+                                                        string trimmedDescription = obj.Content.Substring(0, lastSpaceIndex);
+                                                        <text>@trimmedDescription...</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        @obj.Content
+                                                    }
+                                                }
+                                            </div>
+                                        </div>                                       
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </tbody>

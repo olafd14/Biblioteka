@@ -1,0 +1,50 @@
+﻿@model Review
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="coll-12 text-center">
+                <h2 class="py-2">Dodaj Recenzję</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4 bg-light">
+        <form method="post" class="row">
+            <div class="border p-3">
+                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Title" class="form-control border-0 shadow" />
+                    <label asp-for="Title" class="ms-2"></label>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <textarea asp-for="Content" class="form-control border-0 shadow" style="height: 150px;"></textarea>
+                    <label asp-for="Content" class="ms-2"></label>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">                   
+                    <select asp-for="Rating" class="form-select border-0 shadow">
+                        <option value="">Wybierz ocenę</option>
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <label asp-for="Rating" class="ms-2"></label>
+                </div>
+                <input type="hidden" name="userId" value="@ViewData["UserId"]" />
+                <input type="hidden" name="bookId" value="@ViewData["BookId"]" />
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Dodaj komentarz</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Preview" asp-route-id="@ViewData["BookId"]" asp-route-userId="@ViewData["UserId"]" class="btn btn-outline-primary border form-control">
+                            Back to list
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

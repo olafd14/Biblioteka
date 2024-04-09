@@ -33,6 +33,7 @@ namespace Biblioteka.Models
         /// </summary>
         [Display(Name = "Zdjęcie")]
         public string? ImageUrl { get; set; }
+        public int NumberOfRatings { get; set; }
         /// <summary>
         /// Ocena użytkowników książki
         /// </summary>
@@ -54,5 +55,19 @@ namespace Biblioteka.Models
         [ValidateNever]
         public Category Category { get; set; }
 
+        public Book()
+        {
+            NumberOfRatings = 0;
+        }
+
+        public void CalculateOverallRating(int newRating)
+        {
+            // Oblicz nową ocenę książki na podstawie dotychczasowej oceny i ilości ocen
+            double newOverallRating = (UserRating * NumberOfRatings + newRating) / (NumberOfRatings + 1);
+
+            // Zaktualizuj właściwości książki
+            UserRating = newOverallRating;
+            NumberOfRatings++;
+        }
     }
 }

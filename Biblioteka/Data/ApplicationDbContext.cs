@@ -14,6 +14,7 @@ namespace Biblioteka.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<ApplicationUser> applicationUsers { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +25,7 @@ namespace Biblioteka.Data
                 new Category { Id = 2, Name = "Horror", Description = "Scary movie" });
 
             modelBuilder.Entity<Book>().HasData(
-                new Book { Id = 1, Title = "Witcher", Description = "Wiedźmin", Author = "Sapkowski", isAvailable = true, CategoryId = 1 },
+                new Book { Id = 1, Title = "Witcher", Description = "Wiedźmin", Author = "Sapkowski", isAvailable = true, CategoryId = 1},
                 new Book { Id = 2, Title = "Witcher 2", Description = "Wiedźmin 2", Author = "Sapkowski", isAvailable = true, CategoryId = 2 });
         }
 
