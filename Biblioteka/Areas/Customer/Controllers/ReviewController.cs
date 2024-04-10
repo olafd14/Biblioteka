@@ -15,6 +15,7 @@ namespace Biblioteka.Areas.Customer.Controllers
             _db = db;           
         }
 
+        #region Create
 
         public IActionResult Create(string userId, int bookId)
         {          
@@ -50,5 +51,6 @@ namespace Biblioteka.Areas.Customer.Controllers
             }
             return View();
         }
+        #endregion
     }
 }

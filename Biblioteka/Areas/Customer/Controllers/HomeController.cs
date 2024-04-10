@@ -68,22 +68,22 @@ namespace Biblioteka.Areas.Customer.Controllers
 
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
             var reviews = _db.Reviews.Where(r => r.BookId == id).ToList();
-
-            // Utwórz instancjê ViewModel i przeka¿ informacje o ksi¹¿ce, recenzjach i ID u¿ytkownika
+            
             var viewModel = new BookDetailsViewModel
             {
                 Book = book,
                 Reviews = reviews,
                 UserId = userId
             };
-            // Pass the information to the view
+            
             ViewData["CurrentUser"] = user;
             ViewData["Book"] = book;
 
             return View(viewModel);
         }
 
-        
+        #region BorrowReturnBook
+
         [HttpPost]
         public IActionResult Borrow(int id, string userId)
         {
@@ -93,13 +93,13 @@ namespace Biblioteka.Areas.Customer.Controllers
                 return NotFound();
             }
 
-            // Pobierz zalogowanego u¿ytkownika
+            
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
 
-            // Wypo¿ycz ksi¹¿kê przez u¿ytkownika
+            
             user.BorrowBook(book);
 
-            // Zapisz zmiany w bazie danych
+            
             _db.applicationUsers.Update(user);
             _db.SaveChanges();
 
@@ -115,18 +115,20 @@ namespace Biblioteka.Areas.Customer.Controllers
                 return NotFound();
             }
 
-            // Pobierz zalogowanego u¿ytkownika
+            
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
 
-            // Wypo¿ycz ksi¹¿kê przez u¿ytkownika
+            
             user.ReturnBook(book);
 
-            // Zapisz zmiany w bazie danych
+            
             _db.applicationUsers.Update(user);
             _db.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
+
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

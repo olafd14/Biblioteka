@@ -40,6 +40,8 @@ namespace Biblioteka.Areas.Admin.Controllers
             return View(objUserList);
         }
 
+        #region Edit
+
         public IActionResult Edit(string id)
         {
             string RoleID = _db.UserRoles.FirstOrDefault(u => u.UserId == id).RoleId;
@@ -78,6 +80,8 @@ namespace Biblioteka.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        #endregion
 
         [HttpPost]
         public IActionResult LockUnlock(string id)
