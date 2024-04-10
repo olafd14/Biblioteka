@@ -46,7 +46,7 @@ namespace Biblioteka.Areas.Customer.Controllers
                 var bookToUpdate = _db.Books.Find(obj.BookId);
                 bookToUpdate.CalculateOverallRating(obj.Rating);
                 _db.SaveChanges();
-                return RedirectToAction("Preview", "Home", new { area = "Customer" });
+                return View();
             }
             return View();
         }

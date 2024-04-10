@@ -4,10 +4,10 @@ using Biblioteka.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteka.Areas.Admin.Controllers
+namespace Biblioteka.Areas.Employee.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    [Area("Employee")]
+    [Authorize(Roles = SD.Role_Employee)]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -116,10 +116,8 @@ namespace Biblioteka.Areas.Admin.Controllers
             }
             else
             {
-                return BadRequest("Nie można usunąć kategori do której są przypisane książki.");
+                return RedirectToAction("Index");
             }
-
-
         }
 
         #endregion

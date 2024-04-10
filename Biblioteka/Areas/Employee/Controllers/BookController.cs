@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteka.Areas.Admin.Controllers
+namespace Biblioteka.Areas.Employee.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    [Area("Employee")]
+    [Authorize(Roles = SD.Role_Employee)]
     public class BookController : Controller
-    {        
+    {
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public BookController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)

@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-3 text-start">
                         <a asp-area="Customer" asp-controller="Review" asp-action="Create" asp-route-userId="@User.Identity.Name" asp-route-bookId="@Model.Book.Id" class="btn btn-secondary border form-control"
-                           style=" margin-top: 10px; block-size: max-content; font-size: 25px;">
+                           style=" margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 25px;">
                             Dodaj komentarz
                         </a>
                     </div>
@@ -61,20 +61,20 @@
                         {
                             <form method="post" asp-controller="Home" asp-action="Borrow" asp-route-id="@Model.Book.Id">
                                 <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <button type="submit" class="btn btn-info mx-2" style="margin-top: 10px; block-size: max-content; font-size: 25px;">Wypożycz</button>
+                                <button type="submit" class="btn btn-info mx-2" style="margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 25px;">Wypożycz</button>
                             </form>
                         }
                         else if (isUserBorrowedBook)
                         {
                             <form method="post" asp-controller="Home" asp-action="Return" asp-route-id="@Model.Book.Id">
                                 <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <button type="submit" class="btn btn-warning mx-2" style="margin-top: 10px; block-size: max-content; font-size: 25px;">Oddaj</button>
+                                <button type="submit" class="btn btn-warning mx-2" style="margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 25px;">Oddaj</button>
                             </form>
                         }
                         else
                         {
-                            <button type="button" class="btn btn-secondary mx-2" 
-                            style="margin-top: 10px; block-size: max-content; font-size: 25px;" disabled>
+                            <button type="button" class="btn btn-secondary mx-2"
+                                    style="margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 25px;" disabled>
                             Niedostępna
                             </button>
                         }
@@ -96,7 +96,7 @@
                                                     <strong>@obj.Title</strong>
                                                 </div>
                                                 <div class="col-md-6 text-end" style="color:black">
-                                                    <strong>@obj.Date</strong>
+                                                    <strong>@obj.Date.ToString("dd-MM-yyyy")</strong>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
