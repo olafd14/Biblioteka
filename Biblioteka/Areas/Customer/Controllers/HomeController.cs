@@ -85,7 +85,7 @@ namespace Biblioteka.Areas.Customer.Controllers
         #region BorrowReturnBook
 
         [HttpPost]
-        public IActionResult Borrow(int id, string userId)
+        public IActionResult BorrowBook(int id, string userId)
         {
             var book = _db.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
@@ -107,7 +107,7 @@ namespace Biblioteka.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Return(int id, string userId)
+        public IActionResult ReturnBook(int id, string userId)
         {
             var book = _db.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
@@ -135,5 +135,43 @@ namespace Biblioteka.Areas.Customer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #region Create
+
+        public IActionResult CreateReview(string userId, int bookId)
+        {
+            ViewData["UserId"] = userId;
+            ViewData["BookId"] = bookId;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateReview(Review obj)
+        {
+            obj.Date = DateTime.Now;
+
+            var existingReview = _db.Reviews.FirstOrDefault(c => c.Id == obj.Id);
+
+            if (existingReview != null)
+            {
+                ModelState.AddModelError("Name", "A category with the same name already exists.");
+            }
+
+            if (obj.Title == obj.Content.ToString())
+            {
+                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Reviews.Add(obj);
+                _db.SaveChanges();
+                var bookToUpdate = _db.Books.Find(obj.BookId);
+                bookToUpdate.CalculateOverallRating(obj.Rating);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+        #endregion
     }
 }

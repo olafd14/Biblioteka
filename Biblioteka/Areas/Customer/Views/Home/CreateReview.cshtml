@@ -10,7 +10,8 @@
     </div>
     <div class="card-body p-4 bg-light">
         <form method="post" class="row">
-            <div class="border p-3">                
+            <div class="border p-3">
+                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
                 <div class="form-floating py-2 col-12">
                     <input asp-for="Title" class="form-control border-0 shadow" />
                     <label asp-for="Title" class="ms-2"></label>
@@ -21,7 +22,7 @@
                     <label asp-for="Content" class="ms-2"></label>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
-                <div class="form-floating py-2 col-12">                   
+                <div class="form-floating py-2 col-12">
                     <select asp-for="Rating" class="form-select border-0 shadow">
                         <option value="">Wybierz ocenę</option>
                         @for (int i = 1; i <= 10; i++)
@@ -35,7 +36,7 @@
                 <input type="hidden" name="bookId" value="@ViewData["BookId"]" />
                 <div class="row pt-2">
                     <div class="col-6 col-md-3">
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Preview" asp-route-id="@ViewData["BookId"]" asp-route-userId="@ViewData["UserId"]" type="submit" class="btn btn-primary form-control">Dodaj komentarz</a>
+                        <button type="submit" class="btn btn-primary form-control">Dodaj komentarz</button>
                     </div>
                     <div class="col-6 col-md-3">
                         <a asp-area="Customer" asp-controller="Home" asp-action="Preview" asp-route-id="@ViewData["BookId"]" asp-route-userId="@ViewData["UserId"]" class="btn btn-outline-primary border form-control">
