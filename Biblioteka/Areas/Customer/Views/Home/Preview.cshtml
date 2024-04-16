@@ -24,7 +24,7 @@
                             <img src="@Model.Book.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
                         </div>
                     </div>
-                    <div class="col-md-9 mx-auto" style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin: 10px; overflow: hidden; text-overflow: ellipsis;">
+                    <div class="col-md-9" style=" padding: 5px; margin: 10px; overflow: hidden; text-overflow: ellipsis;">
                         <div class="row mb-2">
                             <div class="col-md-6 mb-2" style="color:black">
                                 <strong style="font-size: 20px; margin-left: 20px;">@Model.Book.Title - @Model.Book.Author</strong>
@@ -39,10 +39,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 text-start">
+                    </div>            
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
                         <a asp-area="Customer" asp-controller="Home" asp-action="CreateReview" asp-route-userId="@User.Identity.Name" asp-route-bookId="@Model.Book.Id" class="btn btn-secondary border form-control"
-                           style=" margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 20px;">
+                           style="width: fit-content; margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 20px;">
                             Dodaj komentarz
                         </a>
                     </div>
@@ -68,8 +70,9 @@
                                 Niedostępna
                             </button>
                         }
-                    </div>
+                    </div>                    
                 </div>
+                
             </div>
             <table class="table">
                 <tbody>

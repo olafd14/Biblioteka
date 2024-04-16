@@ -45,7 +45,7 @@
                             }
                         </td>
                         <td>
-                            <div class="text-end col-md-12" role="group">
+                            <div class="col-md-12" role="group">
                                 <div class="row">
                                     <div class="col-md-9 text-end">
                                         @if (obj.LockoutEnd != null && obj.LockoutEnd > DateTime.Now)
@@ -54,7 +54,7 @@
                                             <form method="post" asp-controller="UserManager" asp-action="LockUnlock">
                                                 <input type="hidden" name="id" value="@obj.Id" />
                                                 <button type="submit" class="btn btn-danger mx-2">
-                                                    <i class="bi bi-lock"></i> Locked
+                                                    <i class="bi bi-lock"></i> Zablokowany
                                                 </button>
                                             </form>
                                         }
@@ -63,14 +63,14 @@
                                             <form method="post" asp-controller="UserManager" asp-action="LockUnlock">
                                                 <input type="hidden" name="id" value="@obj.Id" />
                                                 <button type="submit" class="btn btn-success mx-2">
-                                                    <i class="bi bi-unlock"></i> Unlocked
+                                                    <i class="bi bi-unlock"></i> Odblokowany
                                                 </button>
                                             </form>
                                         }
                                     </div>
                                     <div class="col-md-3">
                                         <a asp-controller="UserManager" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary mx-2">
-                                            Edit
+                                            Edytuj
                                         </a>
                                     </div>
                                 </div>
