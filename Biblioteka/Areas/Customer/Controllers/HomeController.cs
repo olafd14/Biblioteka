@@ -93,13 +93,19 @@ namespace Biblioteka.Areas.Customer.Controllers
                 return NotFound();
             }
 
-            
+            var borrowHistory = new BorrowHistory
+            {
+                BookId = book.Id,
+                UserId = userId,
+                BorrowTime = DateTime.Now
+            };
+
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
 
             
             user.BorrowBook(book);
 
-            
+            _db.BorrowHistorys.Add(borrowHistory);
             _db.applicationUsers.Update(user);
             _db.SaveChanges();
 
@@ -115,13 +121,15 @@ namespace Biblioteka.Areas.Customer.Controllers
                 return NotFound();
             }
 
-            
+            var borrowHistory = _db.BorrowHistorys.FirstOrDefault(b => b.BookId == id && b.ReturnTime == DateTime.MinValue);
+            borrowHistory.ReturnTime = DateTime.Now;
+
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
 
             
             user.ReturnBook(book);
 
-            
+            _db.BorrowHistorys.Update(borrowHistory);
             _db.applicationUsers.Update(user);
             _db.SaveChanges();
 
@@ -151,15 +159,11 @@ namespace Biblioteka.Areas.Customer.Controllers
             obj.Date = DateTime.Now;
 
             var existingReview = _db.Reviews.FirstOrDefault(c => c.Id == obj.Id);
-
-            if (existingReview != null)
-            {
-                ModelState.AddModelError("Name", "A category with the same name already exists.");
-            }
+            
 
             if (obj.Title == obj.Content.ToString())
             {
-                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
+                ModelState.AddModelError("name", "Opis i tytu³ nie mog¹ byæ takie same.");
             }
             if (ModelState.IsValid)
             {
@@ -168,7 +172,7 @@ namespace Biblioteka.Areas.Customer.Controllers
                 var bookToUpdate = _db.Books.Find(obj.BookId);
                 bookToUpdate.CalculateOverallRating(obj.Rating);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Preview", new { id = obj.BookId });
             }
             return View();
         }
