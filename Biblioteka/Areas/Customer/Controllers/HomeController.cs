@@ -15,11 +15,13 @@ namespace Biblioteka.Areas.Customer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ApplicationDbContext db, ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db, ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
         {
             _db = db;
             _logger = logger;
+            _userManager = userManager;
         }
 
         #region Index
@@ -65,6 +67,8 @@ namespace Biblioteka.Areas.Customer.Controllers
             {
                 return NotFound();
             }
+
+            //var userIdTest = _userManager.GetUserId(User);
 
             var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
             var reviews = _db.Reviews.Where(r => r.BookId == id).ToList();

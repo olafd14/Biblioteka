@@ -23,18 +23,8 @@
                         <li class="nav-item">
                             <a class="nav-link active text-light" asp-area="Customer" asp-controller="Home" asp-action="Index">Strona Główna</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Konto użytkownika
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Customer" asp-controller="UserAccount" asp-action="Index">Profil</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Customer" asp-controller="UserAccount" asp-action="BorrowBooks">Moje książki</a>
-                                </li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" asp-area="Customer" asp-controller="UserAccount" asp-action="Index">Moje książki</a>
                         </li>
                         @if (User.IsInRole(SD.Role_Employee))
                         {
@@ -50,13 +40,13 @@
                                         <a class="nav-link" asp-area="Employee" asp-controller="Book" asp-action="Index">Książki</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>                            
                         }
                         @if (User.IsInRole(SD.Role_Admin))
                         {
                             <li class="nav-item">
-                            <a class="nav-link active text-light" asp-area="Admin" asp-controller="UserManager" asp-action="Index">Użytkownicy</a>
-                        </li>
+                                <a class="nav-link active text-light" asp-area="Admin" asp-controller="UserManager" asp-action="Index">Użytkownicy</a>
+                            </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />

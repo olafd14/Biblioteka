@@ -44,9 +44,13 @@ namespace Biblioteka.Areas.Admin.Controllers
 
         public IActionResult Edit(string id)
         {
-            string RoleID = _db.UserRoles.FirstOrDefault(u => u.UserId == id).RoleId;
+            var user = _db.UserRoles.FirstOrDefault(u => u.UserId == id);
+            if (user is null)
+                throw new Exception();
 
-            RoleManagmentViewModel RoleVM = new RoleManagmentViewModel()
+            var roleId = user.RoleId;  
+
+            RoleManagmentViewModel roleVM = new RoleManagmentViewModel()
             {
                 ApplicationUser = _db.applicationUsers.FirstOrDefault(u => u.Id == id),
                 RoleList = _db.Roles.Select(i => new SelectListItem
@@ -57,20 +61,27 @@ namespace Biblioteka.Areas.Admin.Controllers
 
             };
 
-            RoleVM.ApplicationUser.Role = _db.Roles.FirstOrDefault(u => u.Id == RoleID).Name;
+            roleVM.ApplicationUser.Role = _db.Roles.FirstOrDefault(u => u.Id == roleId).Name;
 
-            return View(RoleVM);
+            return View(roleVM);
         }
 
         [HttpPost]
         public IActionResult Edit(RoleManagmentViewModel roleManagmentViewModel)
         {
+            if (roleManagmentViewModel is null)
+                return RedirectToAction("Index");
+
             string RoleID = _db.UserRoles.FirstOrDefault(u => u.UserId == roleManagmentViewModel.ApplicationUser.Id).RoleId;
             string oldRole = _db.Roles.FirstOrDefault(u => u.Id == RoleID).Name;
 
             if (!(roleManagmentViewModel.ApplicationUser.Role == oldRole))
             {
-                ApplicationUser applicationUser = _db.applicationUsers.FirstOrDefault(u => u.Id == roleManagmentViewModel.ApplicationUser.Id);
+                var applicationUser = _db.applicationUsers.FirstOrDefault(u => u.Id == roleManagmentViewModel.ApplicationUser.Id);
+                if(applicationUser is null)
+                {
+                    return RedirectToAction("Index");
+                }
                 _db.SaveChanges();
 
                 _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
