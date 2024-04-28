@@ -12,6 +12,7 @@ Rejestracja i logowanie użytkowników.
 Zarządzanie kontami użytkowników oraz rolami (administrator, pracownik, klient).
 Dodawanie nowych książek do kolekcji.
 Tworzenie nowych kategorii książek.
+Możliwość wygenerowania raportu w formacie PDF.
 
 Technologie
 
