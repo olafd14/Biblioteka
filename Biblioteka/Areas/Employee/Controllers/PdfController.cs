@@ -75,7 +75,7 @@ namespace Biblioteka.Areas.Employee.Controllers
             table.AddCell (new Phrase("Autor", boldFont));
             table.AddCell(new Phrase("Ocena", boldFont));
             int bookPlace = 1;
-            foreach (Book book in objBookList.OrderByDescending(b => b.UserRating))
+            foreach (Book book in objBookList.OrderByDescending(b => b.UserRating).Take(5))
             {
                 table.AddCell(new Phrase(bookPlace.ToString() + ".", boldFont));
                 table.AddCell(new Phrase(book.Title, font));

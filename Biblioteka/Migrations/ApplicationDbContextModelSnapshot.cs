@@ -66,23 +66,133 @@ namespace Biblioteka.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Author = "Sapkowski",
-                            CategoryId = 1,
-                            Description = "Wiedźmin",
+                            Id = 12,
+                            Author = "Andrzej Sapkowski",
+                            CategoryId = 2,
+                            Description = "Zbiór opowiadań, które wprowadzają czytelnika w świat wiedźmina Geralta z Rivii, przedstawiając jego przygody z różnymi potworami i ludźmi, a także ukazując złożoność świata, w którym żyje.",
+                            ImageUrl = "\\images\\ostatnie-zyczenie-wiedzmin-tom-1-b-iext146796925.jpg",
                             NumberOfRatings = 0,
-                            Title = "Witcher",
+                            Title = "Ostatnie życzenie",
                             UserRating = 0.0,
                             isAvailable = true
                         },
                         new
                         {
-                            Id = 2,
-                            Author = "Sapkowski",
+                            Id = 13,
+                            Author = "Andrzej Sapkowski",
                             CategoryId = 2,
-                            Description = "Wiedźmin 2",
+                            Description = "Kontynuacja przygód Geralta, który walczy z kolejnymi bestiami i stawia czoła moralnym dylematom, jednocześnie odkrywając coraz więcej tajemnic swojej przeszłości.",
+                            ImageUrl = "\\images\\miecz-przeznaczenia-wiedzmin-tom-2-b-iext146798643.jpg",
                             NumberOfRatings = 0,
-                            Title = "Witcher 2",
+                            Title = "Miecz przeznaczenia",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Author = "Andrzej Sapkowski",
+                            CategoryId = 2,
+                            Description = " Pierwsza powieść z serii, gdzie historia rozwija się w głębszy sposób, przedstawiając polityczne intrygi, konflikty międzyrasowe oraz losy Ciri, dziedziczki z rodu królewskiego.",
+                            ImageUrl = "\\images\\krew-elfow-wiedzmin-tom-3-b-iext146807006.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Krew elfów",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Author = "Andrzej Sapkowski",
+                            CategoryId = 2,
+                            Description = "Główny wątek koncentruje się na poszukiwaniach Ciri oraz wydarzeniach politycznych w królestwach Północy, gdzie Geralt staje w obliczu nowych wrogów i wyzwań.",
+                            ImageUrl = "\\images\\czas-pogardy-wiedzmin-tom-4-b-iext146808438.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Czas pogardy",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Author = "Andrzej Sapkowski",
+                            CategoryId = 2,
+                            Description = "Geralt i jego towarzysze wyruszają w kolejną niebezpieczną podróż, tym razem z zamiarem obrony Ciri przed jej przeznaczeniem, a także stawiając czoła coraz bardziej złożonym zagrożeniom.",
+                            ImageUrl = "\\images\\chrzest-ognia-wiedzmin-tom-5-b-iext146808430.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Chrzest ognia",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Author = "Andrzej Sapkowski",
+                            CategoryId = 2,
+                            Description = "Główna akcja koncentruje się na rozstrzygnięciu losów Ciri, która znajduje się w centrum konfliktu między różnymi frakcjami, a także na decydującym starciu między siłami dobra i zła.",
+                            ImageUrl = "\\images\\wieza-jaskolki-wiedzmin-tom-6-b-iext146806990.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Wieża Jaskółki",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Author = "Andrzej Sapkowski",
+                            CategoryId = 2,
+                            Description = "Finalna część sagi, w której wszystkie wątki i losy głównych bohaterów splatają się w epicki sposób, prowadząc do ostatecznego starcia między światłem a ciemnością.",
+                            ImageUrl = "\\images\\pani-jeziora-wiedzmin-tom-7-b-iext146807615.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Pani Jeziora",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Author = "Cavan Scott",
+                            CategoryId = 1,
+                            Description = "Ta książka skupia się na młodym hrabim Dooku, który jest jeszcze uczniem w Zakonie Jedi. Pokazuje jego wczesne lata wśród Jedi, jego relacje z nauczycielem, Yodą, oraz początki jego przemiany w mrocznego lorda Sithów.",
+                            ImageUrl = "\\images\\star-wars-dooku-stracony-dla-jedi-b-iext146760891.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Dooku: Stracony dla Jedi",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Author = "Claudia Gray",
+                            CategoryId = 1,
+                            Description = "Książka ta opowiada historię Qui-Gon Jinn'a i jego padawana, Obi-Wana Kenobiego, przed wydarzeniami filmu \"Star Wars: Episode I - The Phantom Menace\". Skupia się na ich relacji mistrz-uczeń oraz ich wspólnych przygodach i wyzwaniach.",
+                            ImageUrl = "\\images\\mistrz-i-uczen-star-wars-b-iext146752016.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Mistrz i uczeń",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Author = "Mike Chen",
+                            CategoryId = 1,
+                            Description = "Ta powieść śledzi losy dwóch braci, Maula i Savage'a Opressów, którzy zostali oddzieleni przez okrutne losy i zmuszeni do walki o przetrwanie na różnych ścieżkach życia. Ich historie są splątane z intrygami Sithów i walką o władzę w galaktyce.",
+                            ImageUrl = "\\images\\star-wars-bracia-b-iext149980208.jpg",
+                            NumberOfRatings = 0,
+                            Title = "Bracia",
+                            UserRating = 0.0,
+                            isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Author = "Stephen King",
+                            CategoryId = 3,
+                            Description = "Dzieci w małym miasteczku Derry w stanie Maine zaczynają znikać, a grupa przyjaciół staje w obliczu tajemniczej i przerażającej istoty, która przybiera różne formy, a która kryje się pod nazwą \"To\".",
+                            ImageUrl = "\\images\\it-b-iext137327068.jpg",
+                            NumberOfRatings = 0,
+                            Title = "It",
                             UserRating = 0.0,
                             isAvailable = true
                         });
@@ -145,13 +255,19 @@ namespace Biblioteka.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Space jurney",
+                            Description = "Literatura science fiction wyróżnia się tym, że eksploruje fantastyczne światy, technologie i społeczeństwa, często w kontekście naukowych hipotez lub możliwych przyszłych scenariuszy. Ta kategoria literacka często skupia się na tematach związanych z przyszłością, podróżami kosmicznymi, sztuczną inteligencją, alternatywnymi rzeczywistościami i wpływem postępu technologicznego na ludzkość.",
                             Name = "Sci-fi"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Scary movie",
+                            Description = "Literatura fantastyczna to jeden z gatunków literackich, w przypadku którego fabuła zawiera, na przykład, elementy związane bezpośrednio z magią. Dla literatury fantasy charakterystyczne jest tworzenie miejsca zdarzeń nieistniejącego w rzeczywistym świecie.",
+                            Name = "Fantasy"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Literatura horroru wyróżnia się tym, że stara się wywołać uczucie strachu, niepokoju i grozy u czytelnika. Często wykorzystuje napięcie, atmosferę oraz elementy nadprzyrodzone lub makabryczne, aby budować suspens i prowadzić do nieoczekiwanych zwrotów akcji. Horror eksploruje ludzkie lęki, tabu i obsesje, często konfrontując czytelnika z najgłębszymi mrocznymi stronami ludzkiej natury.",
                             Name = "Horror"
                         });
                 });
