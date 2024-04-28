@@ -39,8 +39,11 @@
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="Employee" asp-controller="Book" asp-action="Index">Książki</a>
                                     </li>
-                                </ul>
-                            </li>                            
+                                </ul>                                
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Employee" asp-controller="Pdf" asp-action="GeneratePdf">Wygeneruj raport <i style="font-size: 15px;" class="bi bi-box-arrow-up-right"></i></a>
+                            </li>
                         }
                         @if (User.IsInRole(SD.Role_Admin))
                         {
