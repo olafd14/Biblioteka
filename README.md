@@ -3,7 +3,9 @@ Biblioteka - System Wypożyczania Książek
 Projekt to aplikacja ASP.NET MVC, która umożliwia użytkownikom wypożyczanie książek z biblioteki. Użytkownicy mogą przeglądać dostępne książki, wypożyczać je, 
 czytać recenzje innych użytkowników oraz oceniać książki. Ponadto aplikacja umożliwia zarządzanie kontami użytkowników, obsługę ról, dodawanie nowych książek i tworzenie kategorii.
 
+
 Funkcje Aplikacji
+
 
 Przeglądanie dostępnych książek w bibliotece.
 Wypożyczanie książek (jedna książka na użytkownika).
@@ -14,7 +16,9 @@ Dodawanie nowych książek do kolekcji.
 Tworzenie nowych kategorii książek.
 Możliwość wygenerowania raportu w formacie PDF.
 
+
 Technologie
+
 
 ASP.NET MVC
 
@@ -24,7 +28,9 @@ Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
 Microsoft SQL Server
 
+
 System Logowania
+
 
 Aplikacja wykorzystuje bibliotekę Microsoft.AspNetCore.Identity.EntityFrameworkCore do implementacji systemu uwierzytelniania i autoryzacji.
 Biblioteka ta zapewnia gotowe narzędzia do zarządzania kontami użytkowników, w tym logowanie, rejestrację, resetowanie hasła oraz nadawanie ról.
