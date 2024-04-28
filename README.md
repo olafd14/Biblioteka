@@ -17,8 +17,11 @@ Możliwość wygenerowania raportu w formacie PDF.
 Technologie
 
 ASP.NET MVC
+
 Entity Framework Core
+
 Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
 Microsoft SQL Server
 
 System Logowania
