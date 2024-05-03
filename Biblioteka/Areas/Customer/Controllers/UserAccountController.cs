@@ -1,6 +1,7 @@
 ﻿using Biblioteka.Data;
 using Biblioteka.Models;
 using Biblioteka.Models.VM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Biblioteka.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize]
     public class UserAccountController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -68,12 +68,15 @@
                                     }
                                 </div>
                             </div>
-                            <div class="col-md-1">
-                                <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <a asp-controller="Home" asp-action="Preview" asp-route-id="@obj.Id" asp-route-userId="@User.Identity.Name" class="btn btn-info " style="margin-top: 5px;">
-                                    Podgląd
-                                </a>
-                            </div>
+                            @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Customer))
+                            {
+                                <div class="col-md-1">
+                                    <input type="hidden" name="userId" value="@User.Identity.Name" />
+                                    <a asp-controller="Home" asp-action="Preview" asp-route-id="@obj.Id" asp-route-userId="@User.Identity.Name" class="btn btn-info " style="margin-top: 5px;">
+                                        Podgląd
+                                    </a>
+                                </div>
+                            }
                         </td>
                     </tr>
                 }

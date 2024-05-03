@@ -11,6 +11,7 @@ using System.Diagnostics;
 namespace Biblioteka.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -54,7 +55,7 @@ namespace Biblioteka.Areas.Customer.Controllers
             return View();
         }
 
-        [Authorize]
+        
         public IActionResult Preview(int? id, string userId)
         {
             if (id == null || id == 0)
@@ -90,7 +91,7 @@ namespace Biblioteka.Areas.Customer.Controllers
 
         [HttpPost]
         public IActionResult BorrowBook(int id, string userId)
-        {
+         {
             var book = _db.Books.FirstOrDefault(b => b.Id == id);
             if (book == null)
             {
