@@ -37,12 +37,14 @@ namespace Biblioteka.Models
             {
                 BookId = book.Id;
                 HasBorrowedBook = true;
-                book.isAvailable = false;
+                book.CopiesAvailable--;
+                if (book.CopiesAvailable == 0)
+                {
+                    book.isAvailable = false;
+                }
             }
-            // Możesz dodać tutaj obsługę przypadku, gdy użytkownik już ma wypożyczoną książkę
             else
             {
-                // Obsługa błędu, użytkownik ma już wypożyczoną książkę
                 throw new InvalidOperationException("Użytkownik już ma wypożyczoną książkę.");
             }
         }
@@ -55,6 +57,7 @@ namespace Biblioteka.Models
         {
             BookId = null;
             HasBorrowedBook = false;
+            book.CopiesAvailable++;
             book.isAvailable = true;
         }
     }

@@ -13,6 +13,7 @@
         <form method="post" class="row bg-light" enctype="multipart/form-data">
             <input asp-for="Id" hidden />
             <input asp-for="ImageUrl" hidden />
+            <input asp-for="CopiesAvailable" hidden />
             <div class="row">
                 <div class="col-10">
                     <div class="border p-3">                        
@@ -30,6 +31,11 @@
                             <textarea asp-for="Description" class="form-control border-0 shadow" style="height: 150px;"></textarea>
                             <label asp-for="Description" class="ms-2"></label>
                             <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="CopiesNumber" type="number" class="form-control border-0 shadow" min="1" />
+                            <label asp-for="CopiesNumber" class="ms-2"></label>
+                            <span asp-validation-for="CopiesNumber" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-2 col-12">
                             <select asp-for="isAvailable" class="form-select border-0 shadow">

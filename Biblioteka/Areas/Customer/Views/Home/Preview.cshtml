@@ -42,6 +42,22 @@
                     </div>            
                 </div>
                 <div class="row">
+                    <div class="text-end">
+                        @if(Model.Book.CopiesAvailable == 1)
+                        {
+                            <strong>Pozostała ostatnia sztuka!</strong>
+                        }
+                        else if (Model.Book.CopiesAvailable > 1 && Model.Book.CopiesAvailable < 5)
+                        {
+                            <div>Pozostały @(Model.Book.CopiesAvailable) sztuki.</div>
+                        }
+                        else
+                        {
+                            <div>Pozostało @(Model.Book.CopiesAvailable) sztuk.</div>
+                        }
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-3">
                         <a asp-area="Customer" asp-controller="Home" asp-action="CreateReview" asp-route-userId="@User.Identity.Name" asp-route-bookId="@Model.Book.Id" class="btn btn-secondary border form-control"
                            style="width: fit-content; margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 20px;">

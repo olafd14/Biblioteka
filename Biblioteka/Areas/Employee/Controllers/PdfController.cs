@@ -71,8 +71,8 @@ namespace Biblioteka.Areas.Employee.Controllers
             table.AddCell(cell);
 
             table.AddCell("");
-            table.AddCell (new Phrase("Tytuł", boldFont));
-            table.AddCell (new Phrase("Autor", boldFont));
+            table.AddCell(new Phrase("Tytuł", boldFont));
+            table.AddCell(new Phrase("Autor", boldFont));
             table.AddCell(new Phrase("Ocena", boldFont));
             int bookPlace = 1;
             foreach (Book book in objBookList.OrderByDescending(b => b.UserRating).Take(5))
@@ -94,16 +94,16 @@ namespace Biblioteka.Areas.Employee.Controllers
             userBorrowHeader.Alignment = Element.ALIGN_CENTER;
             userBorrowHeader.SpacingAfter = 20f;
             document.Add(userBorrowHeader);
-                       
+
             var topBorrowers = _db.BorrowHistorys
                 .GroupBy(b => b.UserId)
                 .Select(g => new
-                    {
-                        UserId = g.Key,
-                        BorrowCount = g.Count()  
-                     })
-                .OrderByDescending(x => x.BorrowCount)  
-                .Take(3)  
+                {
+                    UserId = g.Key,
+                    BorrowCount = g.Count()
+                })
+                .OrderByDescending(x => x.BorrowCount)
+                .Take(3)
                 .ToList();
 
 
@@ -118,10 +118,10 @@ namespace Biblioteka.Areas.Employee.Controllers
             tableUsers.AddCell(new Phrase("Liczba wypożyczeń", boldFont));
             int userPlace = 1;
             foreach (var obj in topBorrowers)
-            {                
-                tableUsers.AddCell (new Phrase(userPlace.ToString()+".", boldFont));
-                tableUsers.AddCell (new Phrase(obj.UserId, font));
-                tableUsers.AddCell (new Phrase(obj.BorrowCount.ToString(), font)); 
+            {
+                tableUsers.AddCell(new Phrase(userPlace.ToString() + ".", boldFont));
+                tableUsers.AddCell(new Phrase(obj.UserId, font));
+                tableUsers.AddCell(new Phrase(obj.BorrowCount.ToString(), font));
                 userPlace++;
             }
             document.Add(tableUsers);
@@ -167,6 +167,47 @@ namespace Biblioteka.Areas.Employee.Controllers
                 borrowedBookPlace++;
             }
             document.Add(tableBooks);
+            document.Add(new Chunk(new LineSeparator()));
+
+            #endregion
+            #region Aktualnie wypożyczone książki
+
+            Paragraph currentlyBorrowedBooksHeader = new Paragraph("Aktualnie wypożyczone ksiażki:", largeFont);
+            currentlyBorrowedBooksHeader.Alignment = Element.ALIGN_CENTER;
+            currentlyBorrowedBooksHeader.SpacingAfter = 20f;
+            document.Add(currentlyBorrowedBooksHeader);
+
+            var currentlyBorrowedBooks = _db.BorrowHistorys
+                .Where(u => u.ReturnTime == DateTime.MinValue)
+                .Include(u => u.Book)
+                .GroupBy(u => u.UserId)
+                .Select(g => new
+                {
+                    User = g.FirstOrDefault().UserId,
+                    Title = g.FirstOrDefault().Book.Title,
+                    DateOfBorrow = g.FirstOrDefault().BorrowTime,
+                    CopieNumber = g.FirstOrDefault().Book.CopiesNumber,
+                    CopiesAvailable = g.FirstOrDefault().Book.CopiesAvailable
+                })
+                .OrderByDescending(x => x.User)
+                .ToList();
+
+
+            PdfPTable tableCurrentlyBorrowedBooks = new PdfPTable(4);
+
+            tableCurrentlyBorrowedBooks.AddCell(new Phrase("Użytkownik", boldFont));
+            tableCurrentlyBorrowedBooks.AddCell(new Phrase("Wypożyczona książka", boldFont));
+            tableCurrentlyBorrowedBooks.AddCell(new Phrase("Data wypożyczenia", boldFont));
+            tableCurrentlyBorrowedBooks.AddCell(new Phrase("Dostępne książki", boldFont));
+
+            foreach (var obj in currentlyBorrowedBooks)
+            {
+                tableCurrentlyBorrowedBooks.AddCell(new Phrase(obj.User));
+                tableCurrentlyBorrowedBooks.AddCell(new Phrase(obj.Title));
+                tableCurrentlyBorrowedBooks.AddCell(new Phrase(obj.DateOfBorrow.ToString("yyyy-MM-dd")));
+                tableCurrentlyBorrowedBooks.AddCell(new Phrase(obj.CopiesAvailable + "/" + obj.CopieNumber));
+            }
+            document.Add(tableCurrentlyBorrowedBooks);
             document.Add(new Chunk(new LineSeparator()));
 
             #endregion

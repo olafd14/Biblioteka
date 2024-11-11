@@ -1,0 +1,50 @@
+﻿@model List<BorrowedBookViewModel>
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="coll-12 text-center">
+                <h2 class="py-2">Aktualne wypożyczenia</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <table class="table table-bordered table-striped bg-light">
+            <thead>
+                <tr>
+                    <th>
+                        <strong>Nazwa</strong>
+                    </th>
+                    <th>
+                        <strong>Książka</strong>
+                    </th>
+                    <th>
+                        <strong>Data wypożyczenia</strong>
+                    </th>
+                    <th>
+                        <strong>Dostępność</strong>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.OrderBy(u => u.User))
+                {
+                    <tr>
+                        <td>
+                            @obj.User
+                        </td>
+                        <td>
+                            @obj.Title
+                        </td>
+                        <td>
+                            @obj.DateOfBorrow.ToString("dd-MM-yyyy")
+                        </td>
+                        <td>
+                            @obj.CopiesAvailable / @obj.CopieNumber
+                        </td>                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

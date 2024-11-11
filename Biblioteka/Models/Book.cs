@@ -40,6 +40,16 @@ namespace Biblioteka.Models
         [Display(Name = "Ocena")]
         public double UserRating { get; set; }
         /// <summary>
+        /// Liczba kopi
+        /// </summary>
+        [Display(Name = "Liczba kopii")]
+        public int CopiesNumber { get; set; }
+        /// <summary>
+        /// Liczba dostępnych kopii
+        /// </summary>
+        [Display(Name = "Liczba dostępnych kopii")]
+        public int CopiesAvailable { get; set; }
+        /// <summary>
         /// Czy książka jest dostępna do wypożyczenia
         /// </summary>
         [Required]

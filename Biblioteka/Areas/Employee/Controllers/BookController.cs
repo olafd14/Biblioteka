@@ -39,14 +39,15 @@ namespace Biblioteka.Areas.Employee.Controllers
 
             var existingBook = _db.Categories.FirstOrDefault(c => c.Name == obj.Title);
 
+            obj.CopiesAvailable = obj.CopiesNumber;
             if (existingBook != null)
             {
-                ModelState.AddModelError("Name", "A category with the same name already exists.");
+                ModelState.AddModelError("Name", "A book with the same name already exists.");
             }
 
             if (obj.Title == obj.Description.ToString())
             {
-                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
+                ModelState.AddModelError("name", "The Description cannot exactly match the Title.");
             }
             if (ModelState.IsValid)
             {
@@ -63,7 +64,7 @@ namespace Biblioteka.Areas.Employee.Controllers
                     obj.ImageUrl = @"\images\" + fileName;
                 }
 
-                _db.Books.Add(obj);
+                 _db.Books.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -94,9 +95,20 @@ namespace Biblioteka.Areas.Employee.Controllers
         public IActionResult Edit(Book obj, IFormFile? file)
         {
 
-            var existingBook = _db.Categories.FirstOrDefault(c => c.Name == obj.Title);
+            int copiesNumberDiffrence;
 
-            if (existingBook != null)
+            var existingBook = _db.Books.AsNoTracking().FirstOrDefault(c => c.Id == obj.Id);
+
+            if (existingBook.CopiesNumber != obj.CopiesNumber)
+            {
+                copiesNumberDiffrence = existingBook.CopiesNumber - obj.CopiesNumber;
+
+                obj.CopiesAvailable = existingBook.CopiesAvailable - copiesNumberDiffrence;
+            }
+
+            var existingCategory = _db.Categories.FirstOrDefault(c => c.Name == obj.Title);
+
+            if (existingCategory != null)
             {
                 ModelState.AddModelError("Name", "A category with the same name already exists.");
             }
