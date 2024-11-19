@@ -1,79 +1,64 @@
 ﻿@model List<ApplicationUser>
 
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Użytkownicy</h2>
-            </div>
-        </div>
+    <div class="card-header text-center py-4" style="background: linear-gradient(90deg, #3b5998, #8b9dc3); color: white; border-radius: 8px;">
+        <h2 class="fw-bold">Użytkownicy</h2>
     </div>
     <div class="card-body p-4">
-        <table class="table table-bordered table-striped bg-light">
-            <thead>
+        <table class="table table-hover table-striped align-middle">
+            <thead class="table-secondary">
                 <tr>
-                    <th>
-                        <strong>Nazwa</strong>
-                    </th>
-                    <th>
-                        <strong>Rola</strong>
-                    </th>
-                    <th>
-                        <strong> Wypożyczona książka</strong>
-                    </th>
-
+                    <th class="text-center">Nazwa</th>
+                    <th class="text-center">Rola</th>
+                    <th class="text-center">Wypożyczona książka</th>
+                    <th class="text-center">Akcje</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var obj in Model.OrderBy(u => u.UserName))
                 {
                     <tr>
-                        <td>
-                            @obj.UserName
+                        <td class="text-center">
+                            <strong>@obj.UserName</strong>
                         </td>
-                        <td>
-                            @obj.Role
+                        <td class="text-center">
+                            <span class="badge @((obj.Role == "Admin") ? "bg-danger" : "bg-primary")">
+                                @obj.Role
+                            </span>
                         </td>
-                        <td>
+                        <td class="text-center">
                             @if (obj.HasBorrowedBook == true)
                             {
-                                @obj.Book.Title
+                                <span>@obj.Book.Title</span>
                             }
                             else
                             {
-                                <strong>-</strong>
+                                <span class="text-muted">Brak</span>
                             }
                         </td>
-                        <td>
-                            <div class="col-md-12" role="group">
-                                <div class="row">
-                                    <div class="col-md-9 text-end">
-                                        @if (obj.LockoutEnd != null && obj.LockoutEnd > DateTime.Now)
-                                        {
-
-                                            <form method="post" asp-controller="UserManager" asp-action="LockUnlock">
-                                                <input type="hidden" name="id" value="@obj.Id" />
-                                                <button type="submit" class="btn btn-danger mx-2">
-                                                    <i class="bi bi-lock"></i> Zablokowany
-                                                </button>
-                                            </form>
-                                        }
-                                        else
-                                        {
-                                            <form method="post" asp-controller="UserManager" asp-action="LockUnlock">
-                                                <input type="hidden" name="id" value="@obj.Id" />
-                                                <button type="submit" class="btn btn-success mx-2">
-                                                    <i class="bi bi-unlock"></i> Odblokowany
-                                                </button>
-                                            </form>
-                                        }
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a asp-controller="UserManager" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary mx-2">
-                                            Edytuj
-                                        </a>
-                                    </div>
-                                </div>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center">
+                                @if (obj.LockoutEnd != null && obj.LockoutEnd > DateTime.Now)
+                                {
+                                    <form method="post" asp-controller="UserManager" asp-action="LockUnlock" class="me-2">
+                                        <input type="hidden" name="id" value="@obj.Id" />
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="bi bi-lock"></i> Zablokowany
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-controller="UserManager" asp-action="LockUnlock" class="me-2">
+                                        <input type="hidden" name="id" value="@obj.Id" />
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-unlock"></i> Odblokowany
+                                        </button>
+                                    </form>
+                                }
+                                <a asp-controller="UserManager" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-secondary">
+                                    <i class="bi bi-pencil-square"></i> Edytuj
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -83,4 +68,49 @@
     </div>
 </div>
 
+<style>
+    /* Nagłówek */
+    .card-header {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
 
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+    /* Tabela */
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Badge dla ról */
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5em 0.75em;
+        border-radius: 0.5rem;
+    }
+
+    .bg-danger {
+        background-color: #dc3545 !important;
+    }
+
+    .bg-primary {
+        background-color: #007bff !important;
+    }
+
+    /* Przycisk */
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>

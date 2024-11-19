@@ -1,85 +1,125 @@
 ﻿@model UserBorrowHistoryVM
 
-<table>
-    <thead>
-        <div class="text-center mb-4" style="font-size: 40px">
-            Historia wypożyczeń
-        </div>
-    </thead>
-    <tbody>
+<div class="card shadow border-0 mt-4">
+    <div class="card-header text-center py-4" style="background: linear-gradient(90deg, #3b5998, #8b9dc3); color: white; border-radius: 8px;">
+        <h2 class="fw-bold">Historia wypożyczeń</h2>
+    </div>
+    <div class="card-body p-4">
         <div class="row">
-            <table class="table">
+            @foreach (var obj in Model.BorrowHistories.OrderByDescending(u => u.BorrowTime))
+            {
+                <div class="col-12 mb-4">
+                    <div class="card shadow-sm p-3 border-0">
+                        <div class="row g-3">
+                            <!-- Obraz książki -->
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="book-image-wrapper">
+                                    <img src="@obj.Book.ImageUrl" class="book-image" alt="Okładka książki" />
+                                </div>
+                            </div>
 
-                <tbody>
-                    @foreach (var obj in Model.BorrowHistories.OrderByDescending(u => u.BorrowTime))
-                    {
-                        <tr>
-                            <td class="row mb-2" style="border: 1px solid #ccc; border-radius: 8px;">
-                                <table class="table">
-                                    <thead>
-                                        <div class="col-md-12 text-center" style="font-size: 17px;">
-                                            @if(obj.ReturnTime != DateTime.MinValue)
-                                            {
-                                                <strong>Wypożyczona:</strong> @obj.BorrowTime.ToString("dd-MM-yyyy HH:mm")
-                                                <strong>Zwrócona:</strong> @obj.ReturnTime.ToString("dd-MM-yyyy HH:mm")
-                                            }
-                                            @if (obj.ReturnTime == DateTime.MinValue)
-                                            {
-                                                <strong>Wypożyczona:</strong> @obj.BorrowTime.ToString("dd-MM-yyyy HH:mm")
-                                            }
-                                           
-                                        </div>
-                                    </thead>
-                                    <tbody>
-                                        <div class="col-md-2">
-                                            <div style="width: 150px; height: 200px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
-                                                <img src="@obj.Book.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="row mb-2">
-                                                <div class="col-md-6">
-                                                    <a asp-controller="Home" asp-action="Preview" asp-route-id="@obj.Book.Id" asp-route-userId="@User.Identity.Name">
-                                                        <strong>@obj.Book.Title</strong>
-                                                    </a>                                                    
-                                                </div>
-                                                <div class="col-md-6 text-end" style="color:black">
-                                                    <strong>@obj.Book.Category.Name</strong>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col-md-6">
-                                                    @obj.Book.Author
-                                                </div>
-                                                <div class="col-md-6 text-end" style="color:black; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-                                                    <strong>@(obj.Book.UserRating.ToString("0.0")) /10 <i class="bi bi-star-fill"></i></strong>
-                                                </div>
-                                            </div>
-                                            <div style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; height: 134px;">
-                                                @{
-                                                    const int maxLength = 550;
-                                                    if (obj.Book.Description.Length > 550)
-                                                    {
-                                                        int lastSpaceIndex = obj.Book.Description.LastIndexOf(' ', maxLength);
-                                                        string trimmedDescription = obj.Book.Description.Substring(0, lastSpaceIndex);
-                                                        <text>@trimmedDescription...</text>
-                                                    }
-                                                    else
-                                                    {
-                                                        @obj.Book.Description
-                                                    }
-                                                }
-                                            </div>
-                                        </div>
-                                    </tbody>
-                                </table>
-                             
-                                                            
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                            <!-- Szczegóły książki -->
+                            <div class="col-md-10">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="text-primary fw-bold">
+                                        <a asp-controller="Home" asp-action="Preview" asp-route-id="@obj.Book.Id" asp-route-userId="@User.Identity.Name" class="text-decoration-none">
+                                            @obj.Book.Title
+                                        </a>
+                                    </h5>
+                                    <span class="text-secondary"><strong>Kategoria:</strong> @obj.Book.Category.Name</span>
+                                </div>
+                                <p class="text-muted mb-1"><strong>Autor:</strong> @obj.Book.Author</p>
+                                <p class="text-muted">
+                                    <strong>Opis:</strong> @if (obj.Book.Description.Length > 550)
+                                    {
+                                        int lastSpaceIndex = obj.Book.Description.LastIndexOf(' ', 550);
+                                        <text>@obj.Book.Description.Substring(0, lastSpaceIndex)...</text>
+                                    }
+                                    else
+                                    {
+                                        @obj.Book.Description
+                                    }
+                                </p>
+                                <p class="text-muted"><strong>Ocena:</strong> @(obj.Book.UserRating.ToString("0.0"))/10 <i class="bi bi-star-fill"></i></p>
+
+                                <!-- Data wypożyczenia i zwrotu -->
+                                <p class="text-muted mt-3">
+                                    <strong>Wypożyczona:</strong> @obj.BorrowTime.ToString("dd-MM-yyyy HH:mm")
+                                    @if (obj.ReturnTime != DateTime.MinValue)
+                                    {
+                                        <span class="ms-3"><strong>Zwrócona:</strong> @obj.ReturnTime.ToString("dd-MM-yyyy HH:mm")</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    </tbody>
-</table>
+    </div>
+</div>
+
+<style>
+    /* Nagłówek */
+    .card-header {
+        background: linear-gradient(90deg, #3b5998, #8b9dc3);
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        border-radius: 8px 8px 0 0;
+    }
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+    /* Karty */
+    .card {
+        border-radius: 8px;
+        border: none;
+        background-color: #ffffff;
+    }
+
+        .card.shadow-sm {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Obraz książki */
+    .book-image-wrapper {
+        width: 100%;
+        height: 200px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .book-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Tekst */
+    .text-primary {
+        color: #3b5998;
+        text-decoration: none;
+    }
+
+        .text-primary:hover {
+            text-decoration: underline;
+        }
+
+    .text-secondary {
+        color: #495057;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    /* Oceny */
+    .bi-star-fill {
+        color: #ffc107;
+    }
+
+</style>

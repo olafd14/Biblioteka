@@ -1,45 +1,91 @@
 ﻿@model RoleManagmentViewModel
 
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-white ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class=" py-2">Edytuj użytkownika</h2>
-            </div>
-        </div>
+    <div class="card-header text-center py-4" style="background: linear-gradient(90deg, #3b5998, #8b9dc3); color: white; border-radius: 8px;">
+        <h2 class="fw-bold">Edytuj użytkownika</h2>
     </div>
 
     <div class="card-body p-4">
-        <form method="post" class="row bg-light" enctype="multipart/form-data">
-            <input asp-for="ApplicationUser.Id" hidden />
-            <div class="row">
-                <div class="col-10">
-                    <div class="border p-3">                        
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="ApplicationUser.UserName" readonly class="form-control border-0 shadow" />
-                            <label class="ms-2">Nazwa użytkownika</label>
-                            <span asp-validation-for="ApplicationUser.UserName" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="ApplicationUser.Role" asp-items="@Model.RoleList" class="form-select border-0 shadow">
-                            <option disabled selected>-Wybierz Role-</option>
-                        </select>
-                        <label class="ms-2">Rola</label>
-                    </div>                      
-                        <div class="row pt-2">
-                            <div class="col-6 col-md-3">
-                                <button type="submit" class="btn btn-primary form-control">Zapisz</button>
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <a asp-controller="UserManager" asp-action="Index" class="btn btn-outline-primary border form-control">
-                                    Cofnij
-                                </a>
-                            </div>
-                        </div>
+        <form method="post" class="row">
+            <input asp-for="ApplicationUser.Id" type="hidden" />
+            <div class="col-12 col-md-8 mx-auto">
+                <div class="p-4 rounded bg-light shadow-sm">
+                    <!-- Nazwa użytkownika -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="ApplicationUser.UserName" readonly class="form-control shadow-sm" />
+                        <label>Nazwa użytkownika</label>
+                        <span asp-validation-for="ApplicationUser.UserName" class="text-danger"></span>
                     </div>
-                </div>               
-            </div>
 
+                    <!-- Wybór roli -->
+                    <div class="form-floating mb-3">
+                        <select asp-for="ApplicationUser.Role" asp-items="@Model.RoleList" class="form-select shadow-sm">
+                            <option disabled selected>- Wybierz rolę -</option>
+                        </select>
+                        <label>Rola</label>
+                        <span asp-validation-for="ApplicationUser.Role" class="text-danger"></span>
+                    </div>
+
+                    <!-- Przyciski akcji -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary mx-2">
+                            <i class="bi bi-check-circle"></i> Zapisz
+                        </button>
+                        <a asp-controller="UserManager" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Cofnij
+                        </a>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>
+
+<style>
+    /* Nagłówek */
+    .card-header {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+    /* Formy */
+    .form-floating label {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-select:focus ~ label {
+        color: #3b5998;
+    }
+
+    .form-control, .form-select {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Przycisk Zapisz */
+    .btn-primary {
+        background-color: #3b5998;
+        border-color: #3b5998;
+    }
+
+        .btn-primary:hover {
+            background-color: #2d4373;
+        }
+
+    /* Przycisk Cofnij */
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #6c757d;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #e9ecef;
+            color: #3b5998;
+        }
+</style>

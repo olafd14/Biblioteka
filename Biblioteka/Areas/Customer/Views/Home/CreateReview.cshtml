@@ -1,46 +1,43 @@
 ﻿@model Review
 
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Dodaj Recenzję</h2>
-            </div>
-        </div>
+    <div class="card-header page-header text-center">
+        <h2>Dodaj Recenzję</h2>
     </div>
     <div class="card-body p-4 bg-light">
         <form method="post" class="row">
-            <div class="border p-3">
-                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+            <div class="form-container">
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Title" class="form-control border-0 shadow" />
-                    <label asp-for="Title" class="ms-2"></label>
+                    <input asp-for="Title" class="form-control shadow-sm" placeholder="Tytuł" />
+                    <label asp-for="Title">Tytuł</label>
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <textarea asp-for="Content" class="form-control border-0 shadow" style="height: 150px;"></textarea>
-                    <label asp-for="Content" class="ms-2"></label>
+                    <textarea asp-for="Content" class="form-control shadow-sm" style="height: 150px;" placeholder="Treść recenzji"></textarea>
+                    <label asp-for="Content">Treść recenzji</label>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <select asp-for="Rating" class="form-select border-0 shadow">
+                    <select asp-for="Rating" class="form-select shadow-sm">
                         <option value="">Wybierz ocenę</option>
                         @for (int i = 1; i <= 10; i++)
                         {
                             <option value="@i">@i</option>
                         }
                     </select>
-                    <label asp-for="Rating" class="ms-2"></label>
+                    <label asp-for="Rating">Ocena</label>
                 </div>
                 <input type="hidden" name="userId" value="@ViewData["UserId"]" />
                 <input type="hidden" name="bookId" value="@ViewData["BookId"]" />
-                <div class="row pt-2">
+                <div class="row pt-3">
                     <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary form-control">Dodaj komentarz</button>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-plus-circle"></i> Dodaj
+                        </button>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Preview" asp-route-id="@ViewData["BookId"]" asp-route-userId="@ViewData["UserId"]" class="btn btn-outline-primary border form-control">
-                            Cofnij
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Preview" asp-route-id="@ViewData["BookId"]" asp-route-userId="@ViewData["UserId"]" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-arrow-left"></i> Cofnij
                         </a>
                     </div>
                 </div>
@@ -48,3 +45,70 @@
         </form>
     </div>
 </div>
+
+<style>
+    /* Styl nagłówka */
+    .page-header {
+        background: linear-gradient(90deg, #3b5998, #8b9dc3);
+        color: white;
+        padding: 15px 0;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .page-header h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+    /* Styl dla formularza */
+    .form-container {
+        border: none;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .form-floating > label {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-select:focus ~ label {
+        color: #3b5998;
+    }
+
+    /* Styl dla przycisków */
+    .btn-primary {
+        background-color: #3b5998;
+        border-color: #3b5998;
+    }
+
+        .btn-primary:hover {
+            background-color: #2d4373;
+            border-color: #2d4373;
+        }
+
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #6c757d;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #e9ecef;
+            color: #3b5998;
+        }
+
+    /* Cienie dla pól */
+    .form-control, .form-select {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Walidacja */
+    .text-danger {
+        font-size: 0.85rem;
+    }
+</style>

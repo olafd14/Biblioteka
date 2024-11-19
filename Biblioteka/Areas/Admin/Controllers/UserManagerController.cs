@@ -34,6 +34,14 @@ namespace Biblioteka.Areas.Admin.Controllers
                 var roleId = userRoles.FirstOrDefault(u => u.UserId == user.Id).RoleId;
                 user.Role = roles.FirstOrDefault(u => u.Id == roleId).Name;
 
+                if (user.Role == "Customer")
+                {
+                    user.Role = "Klient";
+                }
+                else if (user.Role == "Employee")
+                {
+                    user.Role = "Pracownik";
+                }
             }
 
             return View(objUserList);
@@ -61,6 +69,7 @@ namespace Biblioteka.Areas.Admin.Controllers
             };
 
             roleVM.ApplicationUser.Role = _db.Roles.FirstOrDefault(u => u.Id == roleId).Name;
+
 
             return View(roleVM);
         }

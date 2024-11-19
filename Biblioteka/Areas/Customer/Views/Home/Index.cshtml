@@ -1,89 +1,157 @@
 ﻿@model BookViewModel
 
-<div class="card border-0 mt-4 bg-light">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="py-2">Lista Książek</h2>
-            </div>
-        </div>
+<div class="card border-0 mt-4">
+    <div class="card-header page-header text-center">
+        <h2>Lista Książek</h2>
     </div>
     <div class="card-body p-4">
         <div class="row pb-3 justify-content-end">
             <div class="col-md-3">
                 <form asp-controller="Home" asp-action="Index" class="row">
                     <div class="col-md-8">
-                        <select asp-for="CategoryId" class="form-control border-0 shadow mb-2 " asp-items="ViewBag.CategoryId">
+                        <select asp-for="CategoryId" class="form-select shadow mb-2">
                             <option value="">Wybierz kategorię</option>
                         </select>
                     </div>
                     <div class="col-md-2 text-end">
-                        <button type="submit" class="btn btn-outline-dark">Filtruj</button>
+                        <button type="submit" class="btn btn-dark">Filtruj</button>
                     </div>
                 </form>
             </div>
         </div>
-        <table class="table">
-
-            <tbody>
-                @foreach (var obj in Model.Books.OrderBy(u => u.Title))
-                {
-                    <tr>
-                        <td class="row mb-2" style="border: 1px solid #ccc; border-radius: 8px;">
-                            <div class="col-md-2">
-                                <div style="width: 150px; height: 200px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
-                                    <img src="@obj.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <strong>@obj.Title</strong>
-                                    </div>
-                                    <div class="col-md-6 text-end" style="color:black">
-                                        <strong>@obj.Category.Name</strong>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        @obj.Author
-                                    </div>
-                                    <div class="col-md-6 text-end" style="color:black; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-                                        <strong>@(obj.UserRating.ToString("0.0")) /10 <i class="bi bi-star-fill"></i></strong>
-                                    </div>
-                                </div>
-                                <div style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; height: 134px;">
-                                    @{
-                                        const int maxLength = 550;
-                                        if (obj.Description.Length > 550)
-                                        {
-                                            int lastSpaceIndex = obj.Description.LastIndexOf(' ', maxLength);
-                                            string trimmedDescription = obj.Description.Substring(0, lastSpaceIndex);
-                                            <text>@trimmedDescription...</text>
-                                        }
-                                        else
-                                        {
-                                            @obj.Description
-                                        }
+        <div class="row">
+            @foreach (var obj in Model.Books.OrderBy(u => u.Title))
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm book-card h-100">
+                        <div class="book-image-wrapper">
+                            <img src="@obj.ImageUrl" class="book-image" />
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@obj.Title</h5>
+                            <h6 class="card-subtitle text-muted">@obj.Author</h6>
+                            <p class="text-muted mt-3 flex-grow-1">
+                                @{
+                                    const int maxLength = 150;
+                                    if (obj.Description.Length > maxLength)
+                                    {
+                                        int lastSpaceIndex = obj.Description.LastIndexOf(' ', maxLength);
+                                        string trimmedDescription = obj.Description.Substring(0, lastSpaceIndex);
+                                        <text>@trimmedDescription...</text>
                                     }
-                                </div>
+                                    else
+                                    {
+                                        @obj.Description
+                                    }
+                                }
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="badge bg-primary">@obj.Category.Name</span>
+                                <span class="rating-badge">
+                                    @(obj.UserRating.ToString("0.0"))/10
+                                    <i class="bi bi-star-fill"></i>
+                                </span>
                             </div>
                             @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Customer))
                             {
-                                <div class="col-md-1">
-                                    <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                    <a asp-controller="Home" asp-action="Preview" asp-route-id="@obj.Id" asp-route-userId="@User.Identity.Name" class="btn btn-info " style="margin-top: 5px;">
-                                        Podgląd
-                                    </a>
-                                </div>
+                                <a asp-controller="Home" asp-action="Preview" asp-route-id="@obj.Id" asp-route-userId="@User.Identity.Name"
+                                   class="btn btn-primary btn-sm mt-3">Podgląd</a>
                             }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
+<style>
+    /* Gradient dla nagłówka */
+    .page-header {
+        background: linear-gradient(90deg, #3b5998, #8b9dc3);
+        color: white;
+        padding: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+    /* Styl kart książek */
+    .book-card {
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Obrazki książek */
+    .book-image-wrapper {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #eaf6ff;
+    }
+
+    .book-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    /* Styl dla etykiet kategorii */
+    /* Styl dla etykiet kategorii */
+    .badge {
+        background-color: #8b9dc3; /* Jaśniejszy niebieski z gradientu */
+        color: white;
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        border-radius: 20px;
+    }
+
+    /* Styl dla oceny */
+    .rating-badge {
+        background-color: #ffcc00; /* Złoty kolor dla kontrastu */
+        color: black;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styl dla przycisku Podgląd */
+    .btn-primary {
+        background-color: #3b5998; /* Ciemnoniebieski od gradientu */
+        border-color: #3b5998;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #8b9dc3; /* Jaśniejszy odcień z gradientu */
+            border-color: #8b9dc3;
+            transform: translateY(-2px);
+        }
 
 
+    /* Styl dla tekstów w kartach */
+    .card-body p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+</style>

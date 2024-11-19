@@ -11,9 +11,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-expand-lg bg-primary border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-expand-lg bg-gradient border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Biblioteka</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Biblioteka</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,18 +21,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active text-light" asp-area="Customer" asp-controller="Home" asp-action="Index">Strona Główna</a>
+                            <a class="nav-link active" asp-area="Customer" asp-controller="Home" asp-action="Index">Strona Główna</a>
                         </li>
                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Customer))
-                        {                            
+                        {
                             <li class="nav-item">
-                                <a class="nav-link active text-light" asp-area="Customer" asp-controller="UserAccount" asp-action="Index">Moje książki</a>
+                                <a class="nav-link active" asp-area="Customer" asp-controller="UserAccount" asp-action="Index">Moje książki</a>
                             </li>
                         }
                         @if (User.IsInRole(SD.Role_Employee))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Zarządzaj
                                 </a>
                                 <ul class="dropdown-menu">
@@ -42,19 +42,19 @@
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="Employee" asp-controller="Book" asp-action="Index">Książki</a>
                                     </li>
-                                </ul>                                
+                                </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active text-light" asp-area="Employee" asp-controller="BookManager" asp-action="Index">Aktywne wypożyczenia</a>
+                                <a class="nav-link active" asp-area="Employee" asp-controller="BookManager" asp-action="Index">Aktywne wypożyczenia</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="Employee" asp-controller="Pdf" asp-action="GeneratePdf">Wygeneruj raport <i style="font-size: 15px;" class="bi bi-box-arrow-up-right"></i></a>
+                                <a class="nav-link" asp-area="Employee" asp-controller="Pdf" asp-action="GeneratePdf">Wygeneruj raport <i style="font-size: 15px;" class="bi bi-box-arrow-up-right"></i></a>
                             </li>
                         }
                         @if (User.IsInRole(SD.Role_Admin))
                         {
                             <li class="nav-item">
-                                <a class="nav-link active text-light" asp-area="Admin" asp-controller="UserManager" asp-action="Index">Użytkownicy</a>
+                                <a class="nav-link active" asp-area="Admin" asp-controller="UserManager" asp-action="Index">Użytkownicy</a>
                             </li>
                         }
                     </ul>
@@ -63,36 +63,34 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer navbar-expand-lg bg-primary">
+    <footer class="border-top footer navbar-expand-lg bg-gradient">
         <div class="container text-center text-light">
             <a><i class="bi bi-bank2"></i> Biblioteka by Olaf Durmaj <i class="bi bi-bank2"></i></a>
         </div>
     </footer>
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.delete-btn').click(function (event) {
-                event.preventDefault(); // Zatrzymuje domyślne zachowanie przeglądarki
+                event.preventDefault();
 
                 var deleteUrl = $(this).attr('href');
 
                 $('#confirmDeleteModal').modal('show');
 
-                // Usuń poprzednie zdarzenia obsługujące kliknięcie przycisku "Usuń"
                 $('#confirmDeleteButton').off('click').one('click', function () {
                     window.location.href = deleteUrl;
                 });
             });
 
-            // Zatrzymaj domyślne zachowanie przycisku "Anuluj"
             $('#confirmDeleteModal').on('click', '.btn-secondary', function (event) {
                 event.preventDefault();
                 $('#confirmDeleteModal').modal('hide');
@@ -100,7 +98,6 @@
         });
     </script>
 
-    <!-- Modal -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -119,11 +116,62 @@
         </div>
     </div>
 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <style>
+        /* Styl rozwijanego menu */
+        .navbar.bg-gradient .dropdown-menu {
+            background: linear-gradient(90deg, #3b5998, #8b9dc3); /* Gradient jak w pasku nawigacji */
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .navbar.bg-gradient .dropdown-menu .nav-link {
+                color: white !important;
+                padding: 8px 15px;
+            }
+
+                .navbar.bg-gradient .dropdown-menu .nav-link:hover {
+                    background-color: rgba(255, 255, 255, 0.2); /* Delikatne podświetlenie */
+                    color: #dfe3ee !important;
+                    border-radius: 3px;
+                }
+        /* Gradient dla paska nawigacyjnego */
+        .navbar.bg-gradient {
+            background: linear-gradient(90deg, #3b5998, #8b9dc3) !important;
+            color: white;
+        }
+
+            /* Tekst w pasku nawigacyjnym */
+            .navbar.bg-gradient .navbar-brand,
+            .navbar.bg-gradient .nav-link {
+                color: white !important;
+            }
+
+                .navbar.bg-gradient .nav-link:hover {
+                    text-decoration: underline;
+                    color: #dfe3ee !important;
+                }
+
+        /* Gradient dla stopki */
+        footer.bg-gradient {
+            background: linear-gradient(90deg, #3b5998, #8b9dc3) !important;
+            color: white;
+        }
+
+            footer.bg-gradient a {
+                color: white;
+                text-decoration: none;
+            }
+
+                footer.bg-gradient a:hover {
+                    text-decoration: underline;
+                    color: #dfe3ee;
+                }
+    </style>
 </body>
 </html>

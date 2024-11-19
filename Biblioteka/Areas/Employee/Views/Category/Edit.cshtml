@@ -1,38 +1,104 @@
 ﻿@model Category
 
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Edycja kategorii</h2>
-            </div>
-        </div>
+    <div class="card-header text-center py-4" style="background: linear-gradient(90deg, #3b5998, #8b9dc3); color: white; border-radius: 8px 8px 0 0;">
+        <h2 class="fw-bold text-uppercase">Edycja kategorii</h2>
     </div>
-    <div class="card-body p-4 bg-light">
-        <form method="post" class="row">
+    <div class="card-body p-5 bg-light">
+        <form method="post">
             <input asp-for="Id" hidden />
-            <div class="border p-3">                
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Name" class="form-control border-0 shadow" />
-                    <label asp-for="Name" class="ms-2"></label>
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-2 col-12">
-                    <textarea asp-for="Description" class="form-control border-0 shadow" style="height: 150px;"></textarea>
-                    <label asp-for="Description" class="ms-2"></label>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="row pt-2">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary form-control">Zapisz</button>
+            <div class="row g-4">
+                <!-- Nazwa kategorii -->
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input asp-for="Name" class="form-control shadow-sm" placeholder="Nazwa kategorii" />
+                        <label asp-for="Name">Nazwa kategorii</label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary border form-control">
-                            Cofnij
-                        </a>
+                </div>
+                <!-- Opis kategorii -->
+                <div class="col-12">
+                    <div class="form-floating">
+                        <textarea asp-for="Description" class="form-control shadow-sm" placeholder="Opis kategorii" style="height: 150px;"></textarea>
+                        <label asp-for="Description">Opis kategorii</label>
+                        <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
+                </div>
+                <!-- Przyciski akcji -->
+                <div class="col-12 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-save"></i> Zapisz
+                    </button>
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                        <i class="bi bi-arrow-left"></i> Cofnij
+                    </a>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+<style>
+    /* Gradient dla nagłówka */
+    .card-header {
+        background: linear-gradient(90deg, #3b5998, #8b9dc3);
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        border-radius: 8px 8px 0 0;
+    }
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+    /* Styl formularza */
+    .form-floating > label {
+        color: #6c757d;
+        font-size: 1rem;
+        padding-left: 10px;
+    }
+
+    .form-floating > .form-control:focus ~ label {
+        color: #3b5998;
+    }
+
+    /* Przycisk Zapisz */
+    .btn-primary {
+        background-color: #3b5998;
+        border-color: #3b5998;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+        .btn-primary:hover {
+            background-color: #2d4373;
+            border-color: #2d4373;
+        }
+
+    /* Przycisk Cofnij */
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #6c757d;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #e9ecef;
+            color: #3b5998;
+        }
+
+    /* Pola formularza */
+    .form-control {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Walidacja */
+    .text-danger {
+        font-size: 0.9rem;
+    }
+</style>

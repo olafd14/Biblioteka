@@ -8,136 +8,200 @@
     bool isUserBorrowedBook = currentUser != null && currentUser.BookId == book.Id && currentUser.HasBorrowedBook; // Checking if the current user has borrowed the book
 }
 <div class="card shadow border-0 mt-4">
-    <div class="card-header ml-0 py-3">
+    <div class="card-header bg-gradient text-light py-3">
         <div class="row">
-            <div class="col-2">
-                <a asp-controller="Home" asp-action="Index" class="btn btn-transparent bg-secondary"><i class="bi bi-arrow-left"></i> Cofnij</a>
+            <div class="col-12">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-back d-inline-flex align-items-center">
+                    <i class="bi bi-arrow-left me-2"></i> Cofnij
+                </a>
             </div>
         </div>
     </div>
-    <table>
-        <tbody>
-            <div class="card-body p-4">
-                <div class="row mb-2 shadow" style="background-color: white; border: 1px solid #ccc; border-radius: 8px; padding: 2px;">
-                    <div class="col-md-2">
-                        <div class="text-center" style="width: 200px; height: 300px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; margin-left: 2px; margin-top: 10px; margin-bottom: 2px; margin-right: 2px">
-                            <img src="@Model.Book.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
-                        </div>
-                    </div>
-                    <div class="col-md-9" style=" padding: 5px; margin: 10px; overflow: hidden; text-overflow: ellipsis;">
-                        <div class="row mb-2">
-                            <div class="col-md-6 mb-2" style="color:black">
-                                <strong style="font-size: 20px; margin-left: 20px;">@Model.Book.Title - @Model.Book.Author</strong>
-                            </div>
-                            <div class="col-md-6 mb-2 text-end" style="color:black; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-                                <strong style="font-size: 20px; margin-left: 20px;">@(Model.Book.UserRating.ToString("0.0")) /10 <i class="bi bi-star-fill"></i></strong>
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <div class="mb-2" style="  solid #ccc; border-radius: 8px; padding: 5px; margin-left: 20px; margin-top: 30px; overflow: hidden; text-overflow: ellipsis; font-size: 20px;">
-                                    <strong style="font-size: 20px; color:black">Opis:</strong>
-                                    @Model.Book.Description
-                                </div>
-                            </div>
-                        </div>
-                    </div>            
+    <div class="card-body p-4">
+        <div class="row">
+            <!-- Obraz książki -->
+            <div class="col-md-3 text-center">
+                <div class="book-image-wrapper">
+                    <img src="@Model.Book.ImageUrl" class="book-image" alt="Okładka książki" />
                 </div>
-                <div class="row">
-                    <div class="text-end">
-                        @if(Model.Book.CopiesAvailable == 1)
-                        {
-                            <strong>Pozostała ostatnia sztuka!</strong>
-                        }
-                        else if (Model.Book.CopiesAvailable > 1 && Model.Book.CopiesAvailable < 5)
-                        {
-                            <div>Pozostały @(Model.Book.CopiesAvailable) sztuki.</div>
-                        }
-                        else
-                        {
-                            <div>Pozostało @(Model.Book.CopiesAvailable) sztuk.</div>
-                        }
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <a asp-area="Customer" asp-controller="Home" asp-action="CreateReview" asp-route-userId="@User.Identity.Name" asp-route-bookId="@Model.Book.Id" class="btn btn-secondary border form-control"
-                           style="width: fit-content; margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 20px;">
-                            Dodaj komentarz
-                        </a>
-                    </div>
-                    <div class="col-md-9 text-end">
-                        @if (isBookAvailable && !isUserBorrowedBook)
-                        {
-                            <form method="post" asp-controller="Home" asp-action="BorrowBook" asp-route-id="@Model.Book.Id">
-                                <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <button type="submit" class="btn btn-info mx-2" style="margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 20px;">Wypożycz</button>
-                            </form>
-                        }
-                        else if (isUserBorrowedBook)
-                        {
-                            <form method="post" asp-controller="Home" asp-action="ReturnBook" asp-route-id="@Model.Book.Id">
-                                <input type="hidden" name="userId" value="@User.Identity.Name" />
-                                <button type="submit" class="btn btn-warning mx-2" style="margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 25px;">Oddaj</button>
-                            </form>
-                        }
-                        else
-                        {
-                            <button type="button" class="btn btn-secondary mx-2"
-                                    style="margin-top: 10px; margin-bottom: 10px; block-size: max-content; font-size: 25px;" disabled>
-                                Niedostępna
-                            </button>
-                        }
-                    </div>                    
-                </div>
-                
             </div>
-            <table class="table">
+
+            <!-- Informacje o książce -->
+            <div class="col-md-9">
+                <h3 class="text-primary mb-3">@Model.Book.Title - @Model.Book.Author</h3>
+                <p class="text-muted mb-2"><strong>Opis:</strong> @Model.Book.Description</p>
+                <p class="text-muted"><strong>Ocena:</strong> @(Model.Book.UserRating.ToString("0.0"))/10 <i class="bi bi-star-fill"></i></p>
+                <p class="text-muted">
+                    <strong>Dostępność:</strong>
+                    @if (Model.Book.CopiesAvailable == 1)
+                    {
+                        <span class="text-danger">Ostatnia sztuka!</span>
+                    }
+                    else if (Model.Book.CopiesAvailable > 1 && Model.Book.CopiesAvailable < 5)
+                    {
+                        <span>Pozostały @(Model.Book.CopiesAvailable) sztuki</span>
+                    }
+                    else
+                    {
+                        <span>Pozostało @(Model.Book.CopiesAvailable) sztuk</span>
+                    }
+                </p>
+
+                <!-- Przyciski akcji -->
+                <div class="d-flex justify-content-start mt-4">
+                    <a asp-area="Customer" asp-controller="Home" asp-action="CreateReview" asp-route-userId="@User.Identity.Name" asp-route-bookId="@Model.Book.Id"
+                       class="btn btn-secondary me-2">Dodaj komentarz</a>
+                    @if (isBookAvailable && !isUserBorrowedBook)
+                    {
+                        <form method="post" asp-controller="Home" asp-action="BorrowBook" asp-route-id="@Model.Book.Id">
+                            <button type="submit" class="btn btn-primary">Wypożycz</button>
+                        </form>
+                    }
+                    else if (isUserBorrowedBook)
+                    {
+                        <form method="post" asp-controller="Home" asp-action="ReturnBook" asp-route-id="@Model.Book.Id">
+                            <button type="submit" class="btn btn-warning">Oddaj</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary" disabled>Niedostępna</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Opinie -->
+        <div class="mt-5">
+            <h4 class="text-primary">Opinie:</h4>
+            <table class="table mt-3">
                 <tbody>
-                    <div class="col-md-12">
-                        <strong style="font-size: 20px; margin: 10px">Opinie:</strong>
-                    </div>
                     @foreach (var obj in Model.Reviews.OrderBy(u => u.Title))
                     {
                         <tr>
-                            <td class="row mb-2 shadow" style="border: 1px solid #ccc; border-radius: 8px; padding: 2px; margin: 10px;">
-                                <div class="col-md-12">
-                                    <div class="row mb-2">
-                                        <div class="col-md-6">
-                                            <strong>@obj.Title</strong>
-                                        </div>
-                                        <div class="col-md-6 text-end" style="color:black">
-                                            <strong>@obj.Date.ToString("dd-MM-yyyy")</strong>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-md-6">
-                                            @obj.Rating/10 <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <div class="col-md-6 text-end">
-                                            @obj.UserId
-                                        </div>
-                                    </div>
-                                    <div style=" border: 1px solid #ccc; border-radius: 8px; padding: 5px; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; height: 134px;">
-                                        @{
-                                            const int maxLength = 550;
-                                            if (obj.Content.Length > 550)
-                                            {
-                                                int lastSpaceIndex = obj.Content.LastIndexOf(' ', maxLength);
-                                                string trimmedDescription = obj.Content.Substring(0, lastSpaceIndex);
-                                                <text>@trimmedDescription...</text>
-                                            }
-                                            else
-                                            {
-                                                @obj.Content
-                                            }
-                                        }
-                                    </div>
+                            <td class="p-3 shadow-sm">
+                                <div class="d-flex justify-content-between">
+                                    <strong>@obj.Title</strong>
+                                    <span class="text-secondary">@obj.Date.ToString("dd-MM-yyyy")</span>
                                 </div>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <span>@obj.Rating/10 <i class="bi bi-star-fill"></i></span>
+                                    <span class="text-secondary">Użytkownik: @obj.UserId</span>
+                                </div>
+                                <p class="mt-3">
+                                    @{
+                                        const int maxLength = 550;
+                                        if (obj.Content.Length > maxLength)
+                                        {
+                                            int lastSpaceIndex = obj.Content.LastIndexOf(' ', maxLength);
+                                            string trimmedDescription = obj.Content.Substring(0, lastSpaceIndex);
+                                            <text>@trimmedDescription...</text>
+                                        }
+                                        else
+                                        {
+                                            @obj.Content
+                                        }
+                                    }
+                                </p>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+        </div>
+    </div>
 
-        </tbody>
-    </table>
-</div>
+
+    <style>
+        /* Gradient nagłówka */
+        .bg-gradient {
+            background: linear-gradient(90deg, #3b5998, #8b9dc3);
+            color: white;
+        }
+
+        /* Obraz książki */
+        .book-image-wrapper {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #f5f5f5;
+        }
+
+        .book-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Przyciski */
+        .btn-primary {
+            background-color: #3b5998;
+            border-color: #3b5998;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #8b9dc3;
+                transform: translateY(-2px);
+            }
+
+        .btn-secondary {
+            background-color: #8b9dc3;
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        /* Tabela opinii */
+        .table {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .table td {
+                border: none;
+            }
+
+        .shadow-sm {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Opinie */
+        .text-primary {
+            color: #3b5998;
+        }
+
+        .text-secondary {
+            color: #6c757d;
+        }
+        /* Styl przycisku Cofnij */
+        .btn-back {
+            background: linear-gradient(90deg, #3b5998, #8b9dc3);
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+            .btn-back:hover {
+                background: linear-gradient(90deg, #8b9dc3, #3b5998);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            }
+
+            .btn-back i {
+                font-size: 1.2rem;
+            }
+
+    </style>

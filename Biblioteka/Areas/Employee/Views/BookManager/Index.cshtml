@@ -1,50 +1,82 @@
 ﻿@model List<BorrowedBookViewModel>
 
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="coll-12 text-center">
-                <h2 class="py-2">Aktualne wypożyczenia</h2>
-            </div>
-        </div>
+    <div class="card-header text-center py-4" style="background: linear-gradient(90deg, #3b5998, #8b9dc3); color: white; border-radius: 8px 8px 0 0;">
+        <h2 class="fw-bold text-uppercase">Aktualne wypożyczenia</h2>
     </div>
     <div class="card-body p-4">
-        <table class="table table-bordered table-striped bg-light">
-            <thead>
+        <table class="table table-striped table-hover align-middle shadow-sm">
+            <thead class="table-primary text-secondary">
                 <tr>
-                    <th>
-                        <strong>Nazwa</strong>
-                    </th>
-                    <th>
-                        <strong>Książka</strong>
-                    </th>
-                    <th>
-                        <strong>Data wypożyczenia</strong>
-                    </th>
-                    <th>
-                        <strong>Dostępność</strong>
-                    </th>
+                    <th class="text-center">Użytkownik</th>
+                    <th class="text-center">Tytuł książki</th>
+                    <th class="text-center">Data wypożyczenia</th>
+                    <th class="text-center">Dostępność</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var obj in Model.OrderBy(u => u.User))
                 {
                     <tr>
-                        <td>
-                            @obj.User
+                        <td class="text-center fw-semibold">@obj.User</td>
+                        <td class="text-center">@obj.Title</td>
+                        <td class="text-center">@obj.DateOfBorrow.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center">
+                            <span class="badge rounded-pill
+                                @(obj.CopiesAvailable > 0 ? "bg-success" : "bg-danger")">
+                                @obj.CopiesAvailable / @obj.CopieNumber
+                            </span>
                         </td>
-                        <td>
-                            @obj.Title
-                        </td>
-                        <td>
-                            @obj.DateOfBorrow.ToString("dd-MM-yyyy")
-                        </td>
-                        <td>
-                            @obj.CopiesAvailable / @obj.CopieNumber
-                        </td>                       
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+<style>
+    /* Gradient dla nagłówka */
+    .card-header {
+        background: linear-gradient(90deg, #3b5998, #8b9dc3);
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        border-radius: 8px 8px 0 0;
+    }
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+    /* Tabela */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Badges for availability */
+    .badge {
+        font-size: 1rem;
+        padding: 0.5em 1em;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+        color: white;
+    }
+
+    .bg-danger {
+        background-color: #dc3545 !important;
+        color: white;
+    }
+</style>
