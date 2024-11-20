@@ -9,7 +9,7 @@
             <div class="col-md-3">
                 <form asp-controller="Home" asp-action="Index" class="row">
                     <div class="col-md-8">
-                        <select asp-for="CategoryId" class="form-select shadow mb-2">
+                        <select asp-for="CategoryId" class="form-select shadow mb-2 " asp-items= "ViewBag.CategoryId">
                             <option value="">Wybierz kategorię</option>
                         </select>
                     </div>

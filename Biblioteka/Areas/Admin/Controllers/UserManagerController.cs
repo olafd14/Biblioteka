@@ -55,21 +55,21 @@ namespace Biblioteka.Areas.Admin.Controllers
             if (user is null)
                 throw new Exception();
 
-            var roleId = user.RoleId;  
+            var roleId = user.RoleId;
 
             RoleManagmentViewModel roleVM = new RoleManagmentViewModel()
             {
                 ApplicationUser = _db.applicationUsers.FirstOrDefault(u => u.Id == id),
                 RoleList = _db.Roles.Select(i => new SelectListItem
                 {
-                    Text = i.Name,
+                    Text = i.Name == "Customer" ? "Klient" :
+                   i.Name == "Employee" ? "Pracownik" : i.Name,
                     Value = i.Name
                 }),
 
             };
 
             roleVM.ApplicationUser.Role = _db.Roles.FirstOrDefault(u => u.Id == roleId).Name;
-
 
             return View(roleVM);
         }
@@ -86,7 +86,7 @@ namespace Biblioteka.Areas.Admin.Controllers
             if (!(roleManagmentViewModel.ApplicationUser.Role == oldRole))
             {
                 var applicationUser = _db.applicationUsers.FirstOrDefault(u => u.Id == roleManagmentViewModel.ApplicationUser.Id);
-                if(applicationUser is null)
+                if (applicationUser is null)
                 {
                     return RedirectToAction("Index");
                 }
@@ -111,9 +111,9 @@ namespace Biblioteka.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            if(objFromDb.LockoutEnd!=null && objFromDb.LockoutEnd > DateTime.Now)
+            if (objFromDb.LockoutEnd != null && objFromDb.LockoutEnd > DateTime.Now)
             {
-                objFromDb.LockoutEnd = DateTime.Now;                
+                objFromDb.LockoutEnd = DateTime.Now;
             }
             else
             {
