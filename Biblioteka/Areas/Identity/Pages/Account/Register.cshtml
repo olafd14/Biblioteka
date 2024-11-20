@@ -1,43 +1,99 @@
 ﻿@page
 @model RegisterModel
 
-
-<div class="container mt-4 col-md-4">
-    <div class="row justify-content-center align-items-center">
-        <div class="card border-black">        
-            <div class="row">
-                <div class="col-12 text-center mt-4">
-                    <h2 class="py-2">Rejestracja</h2>
-                </div>
-            </div>        
-        <div class="card-body p-4">
-            <div class="row">
-                <div class="col-md-12">
-                    <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">                        
-                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                        <div class="form-floating mb-3 col-md-12">
-                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                            <label asp-for="Input.Email" class="ms-2 text-muted">Email</label>                            
-                        </div>
-                        <div class="form-floating mb-3 col-md-12">
-                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                            <label asp-for="Input.Password" class="ms-2 text-muted">Hasło</label>
-                        </div>
-                        <div class="form-floating mb-3 col-md-12">
-                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                            <label asp-for="Input.ConfirmPassword" class="ms-2 text-muted">Potwierdź hasło</label>
-                        </div>
-                        <div class="col-12 mt-4">
-                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Zarejestruj</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow border-0">
+        <div class="card-header bg-gradient text-center">
+            <h2 class="text-white">Rejestracja</h2>
         </div>
+        <div class="card-body bg-light">
+            <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control shadow-sm" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" type="password" class="form-control shadow-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password" class="form-label">Hasło</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" type="password" class="form-control shadow-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.ConfirmPassword" class="form-label">Potwierdź hasło</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="mt-4">
+                    <button id="registerSubmit" type="submit" class="btn btn-primary w-100 shadow-sm">Zarejestruj</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+<style>
+    /* Pełnoekranowe tło */
+    body {
+        background: url('/images/Background.jpg') no-repeat center center fixed !important;
+        background-size: cover !important;
+        margin: 0 !important;
     }
+
+    /* Gradient dla nagłówka */
+    .card-header.bg-gradient {
+        background: linear-gradient(90deg, #3b5998, #8b9dc3) !important;
+        color: white !important;
+        font-weight: bold !important;
+        font-size: 1.5rem !important;
+        border-radius: 16px 16px 0 0 !important;
+        text-align: center !important;
+        padding: 15px !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Styl karty */
+    .card {
+        max-width: 500px !important;
+        width: 100% !important;
+        border-radius: 16px !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+        background: rgba(255, 255, 255, 0.95) !important; /* Lekko przezroczyste tło */
+    }
+
+    .card-body {
+        border-radius: 0 0 16px 16px !important;
+        padding: 20px !important;
+    }
+
+    /* Styl dla pól formularza */
+    .form-floating > input,
+    .form-floating > label {
+        font-size: 1rem;
+    }
+
+        .form-floating > input:focus {
+            border-color: #3b5998;
+            box-shadow: 0 0 0 0.2rem rgba(59, 89, 152, 0.25);
+        }
+
+    /* Przyciski */
+    .btn-primary {
+        background-color: #3b5998;
+        border-color: #3b5998;
+    }
+
+        .btn-primary:hover {
+            background-color: #2d4373;
+            border-color: #2d4373;
+        }
+
+    /* Walidacja */
+    .text-danger {
+        font-size: 0.9rem;
+    }
+</style>
