@@ -53,7 +53,6 @@ namespace Biblioteka.Areas.Employee.Controllers
             document.Add(new Chunk(new LineSeparator()));
 
             #endregion
-
             #region Najlepiej oceniane książki
 
             //wyświetlenie najlepeij ocenianych książek
@@ -87,7 +86,6 @@ namespace Biblioteka.Areas.Employee.Controllers
             document.Add(new Chunk(new LineSeparator()));
 
             #endregion
-
             #region Najczęściej wypożyczający użytkownicy
 
             Paragraph userBorrowHeader = new Paragraph("Użytkownicy którzy najczęściej wypożyczali książki:", largeFont);
@@ -128,7 +126,6 @@ namespace Biblioteka.Areas.Employee.Controllers
             document.Add(new Chunk(new LineSeparator()));
 
             #endregion
-
             #region Najczęściej wypożyczane książki
 
             Paragraph bookBorrowHeader = new Paragraph("Najczęściej wypożyczane książki:", largeFont);
