@@ -98,14 +98,17 @@ namespace Biblioteka.Areas.Customer.Controllers
                 return NotFound();
             }
 
+
+            var userIdTest = _userManager.GetUserName(User);
+
+            var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userIdTest);
+
             var borrowHistory = new BorrowHistory
             {
                 BookId = book.Id,
-                UserId = userId,
+                UserId = userIdTest,
                 BorrowTime = DateTime.Now
             };
-
-            var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
 
             
             user.BorrowBook(book);
@@ -129,7 +132,9 @@ namespace Biblioteka.Areas.Customer.Controllers
             var borrowHistory = _db.BorrowHistorys.FirstOrDefault(b => b.BookId == id && b.ReturnTime == DateTime.MinValue);
             borrowHistory.ReturnTime = DateTime.Now;
 
-            var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userId);
+            var userIdTest = _userManager.GetUserName(User);
+
+            var user = _db.applicationUsers.FirstOrDefault(c => c.UserName == userIdTest);
 
             
             user.ReturnBook(book);
